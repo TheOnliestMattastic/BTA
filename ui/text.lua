@@ -29,22 +29,22 @@ Text.FONT = {
 	M_ALT   = love.graphics.newFont(UI.fontM_alt.img, UI.fontM_alt.size),
 	L_ALT   = love.graphics.newFont(UI.fontL_alt.img, UI.fontL_alt.size),
 	XL_ALT  = love.graphics.newFont(UI.fontXL_alt.img, UI.fontXL_alt.size),
--- stylua: ignore end
 }
+-- stylua: ignore end
 
 function Text.add(string, x, y, font, align)
 	local txt = string or "Battle Tactics Arena"
-  local txtFont = font or Text.FONT.L
-  local txtX = x
+	local txtFont = font or Text.FONT.L
+	local txtX = x
 
-  if align then
-    local txtWidth = txtFont:getWidth(txt)
-  if align == Text.ALIGN.CENTER then
-    txtX = x - txtWidth / Text.ALIGN.CENTER
-  else
-    txtX = x - txtWidth / Text.ALIGN.RIGHT
-  end
-end
+	if align then
+		local txtWidth = txtFont:getWidth(txt)
+		if align == Text.ALIGN.CENTER then
+			txtX = x - txtWidth / Text.ALIGN.CENTER
+		else
+			txtX = x - txtWidth / Text.ALIGN.RIGHT
+		end
+	end
 
 	love.graphics.setFont(txtFont)
 	love.graphics.print(txt, txtX, y)
