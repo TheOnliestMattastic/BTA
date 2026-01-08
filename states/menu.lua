@@ -19,7 +19,7 @@ end
 function menu.draw()
 	love.graphics.setCanvas(menuCanvas)
 	love.graphics.clear(0.3, 0.4, 0.4)
-	Text.drawTitle()
+	Text.add("Title", G.virtual.WIDTH / 2, G.virtual.HEIGHT / 3, Text.FONT.XL, Text.ALIGN.CENTER)
 	love.graphics.setCanvas()
 	if G.virtual.scale and G.virtual.scale > 0 then
 		love.graphics.draw(menuCanvas, G.virtual.translateX, G.virtual.translateY, 0, G.virtual.scale, G.virtual.scale)

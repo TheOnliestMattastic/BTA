@@ -1,16 +1,18 @@
 -- =============================================================================
 -- ui/text.lua
 -- -----------------------------------------------------------------------------
+-- WHAT: UI component for handling text for screen rendering
+-- TODO: Refactor to read and configure data dynamically and handle input
+-- -----------------------------------------------------------------------------
 
 local UI = require("assets.config.uiData")
-local virtual = require("lib.virtual")
 local Text = {}
 
 -- stylua: ignore start
 Text.ALIGN = {
-	LEFT     = "left",
-	CENTER   = "center",
-	RIGHT    = "right",
+	LEFT     = nil,
+	CENTER   = 2,
+	RIGHT    = 1,
 }
 
 Text.FONT = {
@@ -30,13 +32,22 @@ Text.FONT = {
 -- stylua: ignore end
 }
 
-function Text.drawTitle()
-	local txt = "Battle Tactics Arena"
-	local width = Text.FONT.XL:getWidth(txt)
-	local x = (virtual.WIDTH / 2) - (width / 2)
-	local y = virtual.HEIGHT / 3
-	love.graphics.setFont(Text.FONT.XL)
-	love.graphics.print(txt, x, y)
+function Text.add(string, x, y, font, align)
+	local txt = string or "Battle Tactics Arena"
+  local txtFont = font or Text.FONT.L
+  local txtX = x
+
+  if align then
+    local txtWidth = txtFont:getWidth(txt)
+  if align == Text.ALIGN.CENTER then
+    txtX = x - txtWidth / Text.ALIGN.CENTER
+  else
+    txtX = x - txtWidth / Text.ALIGN.RIGHT
+  end
+end
+
+	love.graphics.setFont(txtFont)
+	love.graphics.print(txt, txtX, y)
 end
 
 return Text
