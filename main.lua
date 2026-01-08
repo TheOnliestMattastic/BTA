@@ -2,13 +2,12 @@
 -- main.lua
 -- -----------------------------------------------------------------------------
 
-local currentState = nil
-
 -- =============================================================================
 -- state manager
 -- TODO: extract into module
 -- -----------------------------------------------------------------------------
 
+local currentState = nil
 local loadedStates = {}
 
 function SwitchState(stateName)
