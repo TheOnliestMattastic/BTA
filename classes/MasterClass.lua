@@ -1,3 +1,12 @@
+-- =============================================================================
+-- classes/MasterClass.lua
+-- WHAT: Base class for creatures/units (lifecycle: update, draw, state)
+-- WHY: Provides common interface for all game entities; enables enable/disable
+-- HOW: Inheritable class with metatable; calls update/draw if enabled
+-- NOTE: Currently minimal; game entities should extend this class
+-- TODO: Add position, stats, health; implement inheritance pattern
+-- =============================================================================
+
 local MasterClass = {}
 MasterClass.__index = MasterClass
 
@@ -16,3 +25,4 @@ function MasterClass:setEnabled(enabled)
 end
 
 return MasterClass
+

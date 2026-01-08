@@ -28,4 +28,3 @@ function virtual.scaleScreen()
 end
 
 return virtual
-

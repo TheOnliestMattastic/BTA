@@ -1,7 +1,7 @@
 -- =============================================================================
--- lib/Gals.lua
--- WHAT: Centeralized dependency management for the game
--- -----------------------------------------------------------------------------
+-- lib/globals.lua
+-- WHAT: Centralized global dependency management (virtual screen, controls)
+-- =============================================================================
 
 local G = {}
 

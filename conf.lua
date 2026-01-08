@@ -1,5 +1,13 @@
--- https://love2d.org/wiki/Config_Files
+-- =============================================================================
+-- conf.lua
+-- WHAT: Love2D configuration file for game window, audio, and module setup
+-- WHY: Configures engine-level behavior before game initialization
+-- HOW: love.conf() is called by Love2D before love.load(); sets t table values
+-- NOTE: Window size is 1024x768 with resizing enabled (min 1024x768)
+-- =============================================================================
+
 function love.conf(t)
+  -- stylua: ignore start
 	t.identity              = nil
 	t.appendidentity        = false
 	t.version               = "11.5"
@@ -11,7 +19,7 @@ function love.conf(t)
 	t.audio.mic             = false
 	t.audio.mixwithsystem   = true
 
-	t.window.title          = "Battle Tactics Arena: Remastered, Refactored, Remastered"
+	t.window.title          = "Battle Tactics Arena: Remastered, Refactored, Reengineered"
 	t.window.icon           = nil
 	t.window.width          = 1024
 	t.window.height         = 768

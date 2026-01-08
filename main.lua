@@ -1,11 +1,15 @@
 -- =============================================================================
 -- main.lua
--- -----------------------------------------------------------------------------
+-- WHAT: Core game loop and state management for Battle Tactics Arena
+-- WHY: Centralized lifecycle and state transitions using Love2D callbacks
+-- HOW: Implements love.load/update/draw/keypressed hooks; routes to state modules
+-- NOTE: State manager is inline; consider extracting to lib/StateManager.lua
+-- =============================================================================
 
 -- =============================================================================
 -- state manager
 -- TODO: extract into module
--- -----------------------------------------------------------------------------
+-- =============================================================================
 
 local currentState = nil
 local loadedStates = {}

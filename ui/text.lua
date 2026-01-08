@@ -1,9 +1,10 @@
 -- =============================================================================
 -- ui/text.lua
--- -----------------------------------------------------------------------------
--- WHAT: UI component for handling text for screen rendering
--- TODO: Refactor to read and configure data dynamically and handle input
--- -----------------------------------------------------------------------------
+-- WHAT: Text rendering UI component with font sizes and alignment support
+-- WHY: Abstracts Love2D font/print calls; provides consistent text styling
+-- HOW: Loads fonts from uiData; Text.add() renders with alignment calculations
+-- TODO: Refactor to read font config dynamically; add color/shadow support
+-- =============================================================================
 
 local UI = require("assets.config.uiData")
 local Text = {}

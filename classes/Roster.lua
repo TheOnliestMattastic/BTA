@@ -1,7 +1,9 @@
 -- =============================================================================
 -- classes/Roster.lua
--- WHAT: Entity manager; attaches and tracks components
--- -----------------------------------------------------------------------------
+-- WHAT: Entity manager; tracks creatures and their abilities (component system)
+-- WHY: Centralized storage for game entities and their behavioral components
+-- HOW: Maps creatures to ability types; supports queries for creatures with abilities
+-- =============================================================================
 
 local Roster = {}
 Roster.__index = Roster
@@ -32,7 +34,7 @@ end
 
 -- attach  abilities to creatures
 function Roster:addAbility(creatureID, abilityType, abilityData)
-	if not self.creature[abilityType][creatureID] then
+	if not self.creatures[abilityType][creatureID] then
 		self.abilities[abilityType] = {}
 	end
 	self.abilities[abilityType][creatureID] = abilityData
