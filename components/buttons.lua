@@ -21,16 +21,9 @@ function Button.add(btnConfig)
 	}
 end
 
+-- renders button centered at X
 function Button.draw(btn, x, y, w, h)
-	love.graphics.draw(
-	  btn.img,
-	  btn.quads[btn.state],
-	  x,
-	  y,
-	  0,
-	  w / btn.w,
-	  h / btn.h
-	)
+	love.graphics.draw(btn.img, btn.quads[btn.state], x - w / 2, y, 0, w / btn.w, h / btn.h)
 end
 
 return Button

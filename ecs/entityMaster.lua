@@ -1,15 +1,15 @@
 -- =============================================================================
--- classes/entityManager.lua
+-- classes/entityMaster.lua
 -- WHAT: Entity manager; tracks entities and their components (component system)
 -- WHY: Centralized storage for game entities and their behavioral components
 -- HOW: Maps entities to component types; supports queries for entities with components
 -- =============================================================================
 
-local EntityManager = {}
-EntityManager.__index = EntityManager
+local EntityMaster = {}
+EntityMaster.__index = EntityMaster
 
-function EntityManager.new()
-	local self = setmetatable({}, EntityManager)
+function EntityMaster.new()
+	local self = setmetatable({}, EntityMaster)
 	self.nextEntityID = 1
 	self.entities = {}
 	self.components = {}
@@ -17,7 +17,7 @@ function EntityManager.new()
 end
 
 -- create new entity and return ID
-function EntityManager:createEntity()
+function EntityMaster:createEntity()
 	local id = self.nextEntityID
 	self.nextEntityID = self.nextEntityID + 1
 	self.entities[id] = true
@@ -25,7 +25,7 @@ function EntityManager:createEntity()
 end
 
 -- remove entity
-function EntityManager:removeEntity(entityID)
+function EntityMaster:removeEntity(entityID)
 	self.entities[entityID] = nil
 	for componentType, _ in pairs(self.components) do
 		self.components[componentType][entityID] = nil
@@ -33,7 +33,7 @@ function EntityManager:removeEntity(entityID)
 end
 
 -- attach  components to entities
-function EntityManager:addComponent(entityID, componentType, componentData)
+function EntityMaster:addComponent(entityID, componentType, componentData)
 	if not self.entities[componentType][entityID] then
 		self.components[componentType] = {}
 	end
@@ -41,14 +41,14 @@ function EntityManager:addComponent(entityID, componentType, componentData)
 end
 
 -- remove components from entity
-function EntityManager:removeComponent(entityID, componentType)
+function EntityMaster:removeComponent(entityID, componentType)
 	if self.components[componentType] then
 		self.components[componentType][entityID] = nil
 	end
 end
 
 -- get components from a entity
-function EntityManager:getComponent(entityID, componentType)
+function EntityMaster:getComponent(entityID, componentType)
 	if self.components[componentType] then
 		return self.components[componentType][entityID]
 	end
@@ -56,7 +56,7 @@ function EntityManager:getComponent(entityID, componentType)
 end
 
 -- get all entities with specified component
-function EntityManager:getEntitiesWith(componentType)
+function EntityMaster:getEntitiesWith(componentType)
 	local result = {}
 	if self.components[componentType] then
 		for entityID, _ in pairs(self.components[componentType]) do
@@ -66,7 +66,7 @@ function EntityManager:getEntitiesWith(componentType)
 end
 
 -- get all entities with all specified components
-function EntityManager:getEntitiesWithAll(...)
+function EntityMaster:getEntitiesWithAll(...)
 	local componentTypes = { ... }
 	local result = {}
 
@@ -86,4 +86,4 @@ function EntityManager:getEntitiesWithAll(...)
 	return result
 end
 
-return EntityManager
+return EntityMaster

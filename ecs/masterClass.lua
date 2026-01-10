@@ -6,10 +6,10 @@
 local MasterClass = {}
 MasterClass.__index = MasterClass
 
-function MasterClass.new(roster, ui)
+function MasterClass.new(entityMaster, ui)
 	local self = setmetatable({}, MasterClass)
 	self.enabled = true
-	self.roster = roster
+	self.entityMaster = entityMaster
 	self.ui = ui
 	return self
 end
