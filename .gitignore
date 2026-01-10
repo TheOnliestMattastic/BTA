@@ -1,0 +1,51 @@
+# =============================================================================
+# Battle Tactics Arena .gitignore
+# =============================================================================
+
+# Local project notes (symlinked to Obsidian vault)
+.notes
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+.directory
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.vim/
+*.sublime-project
+*.sublime-workspace
+.eclipse/
+
+# Lua and Love2D
+*.luac
+luac.out
+
+# Build artifacts
+/build/
+/dist/
+*.o
+*.a
+*.so
+*.dylib
+*.dll
+
+# Dependencies
+node_modules/
+*.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# OS temporary files
+*.tmp
+.cache/
+
+# Love2D specific
+conf.lua.bak

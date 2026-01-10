@@ -3,13 +3,14 @@
 -- -----------------------------------------------------------------------------
 
 -- inherit from MasterClass
-local MC = require("ecs.masterClass")
+local MC = require("core.masterClass")
 local ControlSys = setmetatable({}, { __index = MC })
 ControlSys.__index = ControlSys
+local Controls = require("config.ctrlData")
 
-function ControlSys.new(entityMaster, ctrlConfig)
+function ControlSys.new(entityMaster)
 	local self = setmetatable(MC.new(entityMaster), ControlSys)
-	self.keys = ctrlConfig
+	self.keys = Controls
 	return self
 end
 

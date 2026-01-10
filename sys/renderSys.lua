@@ -4,7 +4,7 @@
 -- -----------------------------------------------------------------------------
 
 -- inherit from MasterClass
-local MC = require("ecs.masterClass")
+local MC = require("core.masterClass")
 local RenderSys = setmetatable({}, { __index = MC })
 RenderSys.__index = RenderSys
 
