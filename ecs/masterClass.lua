@@ -1,14 +1,17 @@
 -- =============================================================================
--- classes/MasterClass.lua
+-- classes/masterClass.lua
 -- WHAT: Base class for systems
 -- -----------------------------------------------------------------------------
 
 local MasterClass = {}
 MasterClass.__index = MasterClass
 
-function MasterClass:new(entityManager)
+function MasterClass.new(roster, ui)
+	local self = setmetatable({}, MasterClass)
 	self.enabled = true
-	self.roster = entityManager
+	self.roster = roster
+	self.ui = ui
+	return self
 end
 
 function MasterClass:update(dt) end

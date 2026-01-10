@@ -1,15 +1,11 @@
 -- =============================================================================
 -- states/menu.lua
 -- WHAT: Main menu state (title screen, initial navigation)
--- WHY: Handles menu rendering, input, and transitions to game state
--- HOW: Uses virtual canvas for scaling; renders text UI; responds to ESC key
--- NOTE: Currently shows placeholder "Title"
--- TODO: add buttons and navigation
 -- =============================================================================
 
 local G = require("lib.globals")
-local Text = require("ui.text")
-local Button = require("ui.buttons")
+local Text = require("components.text")
+local Button = require("components.buttons")
 local menu = {}
 local menuCanvas
 local menuBtn
