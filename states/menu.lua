@@ -3,43 +3,31 @@
 -- WHAT: Main menu state (title screen, initial navigation)
 -- =============================================================================
 
-local G = require("lib.globals")
-local Text = require("components.text")
-local Button = require("components.buttons")
+local RenderSys = require("sys.render")
+local Roster = require("ecs.entityManager")
+-- local G = require("lib.globals")
 local menu = {}
-local menuCanvas
-local menuBtn
+
+local RS = {}
 
 function menu.load()
-	menuCanvas = love.graphics.newCanvas(G.virtual.WIDTH, G.virtual.HEIGHT)
-	G.virtual.scaleScreen()
-	menuBtn = Button.add(G.ui.button_1)
+	RS = RenderSys.new(Roster)
 end
 
 function menu.update(dt)
-	G.virtual.scaleScreen()
+	RS:update()
 end
 
 function menu.draw()
-	love.graphics.setCanvas(menuCanvas)
-	love.graphics.clear(0.3, 0.4, 0.4)
-	Text.add("Battle Tactics Arena", G.virtual.WIDTH / 2, G.virtual.HEIGHT / 3, Text.FONT.XL, Text.ALIGN.CENTER)
-	Button.draw(menuBtn, G.virtual.WIDTH / 2, (G.virtual.HEIGHT / 4) * 3, G.virtual.WIDTH / 3, G.virtual.HEIGHT / 4)
-	love.graphics.setCanvas()
-	if G.virtual.scale and G.virtual.scale > 0 then
-		love.graphics.draw(menuCanvas, G.virtual.translateX, G.virtual.translateY, 0, G.virtual.scale, G.virtual.scale)
-	end
+	RS:drawMenuUI()
 end
 
-function menu.resize()
-	G.virtual.scaleScreen()
-end
 
-function menu.keyreleased(key)
-	if key == G.controls.ESC then
-		love.event.quit()
-		return
-	end
-end
+-- function menu.keyreleased(key)
+-- 	if key == G.controls.ESC then
+-- 		love.event.quit()
+-- 		return
+-- 	end
+-- end
 
 return menu
