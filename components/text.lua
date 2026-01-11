@@ -7,7 +7,7 @@
 -- TODO: Refactor to read font config dynamically; add color/shadow support
 -- -----------------------------------------------------------------------------
 
-local UI = require("config.uiData")
+local UI = require("registries.uiReg")
 local Text = {}
 
 -- stylua: ignore start

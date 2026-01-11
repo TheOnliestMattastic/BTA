@@ -3,18 +3,18 @@
 -- -----------------------------------------------------------------------------
 
 -- inherit from MasterClass
-local MC = require("core.masterClass")
-local ControlSys = setmetatable({}, { __index = MC })
-ControlSys.__index = ControlSys
-local Controls = require("config.ctrlData")
+local MC = require("core.MasterClass")
+local controlSys = setmetatable({}, { __index = MC })
+controlSys.__index = controlSys
+local controls = require("config.controlConfig")
 
-function ControlSys.new(entityMaster)
-	local self = setmetatable(MC.new(entityMaster), ControlSys)
-	self.keys = Controls
+function controlSys.new(entityMaster)
+	local self = setmetatable(MC.new(entityMaster), controlSys)
+	self.keys = controls
 	return self
 end
 
-function ControlSys:action(key)
+function controlSys:action(key)
 	-- match key to action
 	local action
 	for actionName, keyValue in pairs(self.keys) do
@@ -45,40 +45,40 @@ function ControlSys:action(key)
 end
 
 -- TODO: configure with appropriate action
-function ControlSys:moveLEFT()
+function controlSys:moveLEFT()
 	print("LEFT")
 end
 
-function ControlSys:moveDOWN()
+function controlSys:moveDOWN()
 	print("DOWN")
 end
 
-function ControlSys:moveUP()
+function controlSys:moveUP()
 	print("UP")
 end
 
-function ControlSys:moveRIGHT()
+function controlSys:moveRIGHT()
 	print("RIGHT")
 end
 
-function ControlSys:QUIT()
+function controlSys:QUIT()
 	print("QUIT")
 end
 
-function ControlSys:CONFIRM()
+function controlSys:CONFIRM()
 	print("CONFIRM")
 end
 
-function ControlSys:SELECT()
+function controlSys:SELECT()
 	print("SELECT")
 end
 
-function ControlSys:MOVE()
+function controlSys:MOVE()
 	print("MOVE")
 end
 
-function ControlSys:ATTACK()
+function controlSys:ATTACK()
 	print("ATTACK")
 end
 
-return ControlSys
+return controlSys

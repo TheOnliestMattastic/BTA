@@ -1,5 +1,5 @@
 -- =============================================================================
--- assets/config/reg_chars.lua
+-- assets/config/creatureReg.lua
 -- -----------------------------------------------------------------------------
 -- Define per-class sprite sheet and animations
 -- Col (y in frames) = direction (1=down, 2=up, 3=left, 4=right)

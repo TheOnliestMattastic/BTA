@@ -1,5 +1,5 @@
 -- =============================================================================
--- classes/entityMaster.lua
+-- classes/EntityMaster.lua
 -- WHAT: Entity manager; tracks entities and their components (component system)
 -- WHY: Centralized storage for game entities and their behavioral components
 -- HOW: Maps entities to component types; supports queries for entities with components
@@ -34,7 +34,7 @@ end
 
 -- attach  components to entities
 function EntityMaster:addComponent(entityID, componentType, componentData)
-	if not self.entities[componentType][entityID] then
+	if not self.components[componentType] then
 		self.components[componentType] = {}
 	end
 	self.components[componentType][entityID] = componentData
@@ -47,7 +47,7 @@ function EntityMaster:removeComponent(entityID, componentType)
 	end
 end
 
--- get components from a entity
+-- get components from a Entity
 function EntityMaster:getComponent(entityID, componentType)
 	if self.components[componentType] then
 		return self.components[componentType][entityID]
@@ -63,6 +63,7 @@ function EntityMaster:getEntitiesWith(componentType)
 			table.insert(result, entityID)
 		end
 	end
+  return result
 end
 
 -- get all entities with all specified components

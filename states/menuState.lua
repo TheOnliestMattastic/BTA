@@ -3,19 +3,29 @@
 -- WHAT: Main menu state (title screen, initial navigation)
 -- -----------------------------------------------------------------------------
 
+local EM = require("core.EntityMaster")
 local RenderSys = require("sys.renderSys")
 local ControlSys = require("sys.controlSys")
+local EntityFactory = require("core.EntityFactory")
 
 local menu = {}
-local Render = {}
-local Ctrls = {}
+local render = {}
+local ctrls = {}
+local factory = {}
 
 -- =============================================================================
 -- menu.load()
 -- -----------------------------------------------------------------------------
 function menu.load()
-	Render = RenderSys.new()
-	Ctrls = ControlSys.new()
+	-- create systems
+	local em = EM.new()
+	render = RenderSys.new(em)
+	ctrls = ControlSys.new(em)
+	factory = EntityFactory.new(em)
+
+	-- create menu ui entities from config
+	factory:menuUI("title")
+	factory:menuUI("startButton")
 end
 
 -- =============================================================================
@@ -27,18 +37,14 @@ function menu.update(dt) end
 -- menu.draw()
 -- -----------------------------------------------------------------------------
 function menu.draw()
-	Render:drawMenuUI()
+	render:drawMenuUI()
 end
 
 -- =============================================================================
 -- menu.keyreleased()
 -- -----------------------------------------------------------------------------
 function menu.keyreleased(key)
-	for i in pairs(Ctrls.keys) do
-		if key == Ctrls.keys[i] then
-			Ctrls:action(key)
-		end
-	end
+	ctrls:action(key)
 end
 
 return menu

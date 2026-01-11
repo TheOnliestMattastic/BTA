@@ -17,10 +17,10 @@ local loadedStates = {}
 function SwitchState(stateName)
 	local state
 	if stateName == "menu" then
-		local menu = require("states.menu")
+		local menu = require("states.menuState")
 		state = menu
 	elseif stateName == "game" then
-		local game = require("states.game")
+		local game = require("states.gameState")
 		state = game
 	else
 		error("Unknown state: " .. tostring(stateName))

@@ -7,7 +7,7 @@ local G = {}
 
 -- core
 G.virtual = require("lib.virtual")
-G.controls = require("config.ctrlData")
-G.ui = require("config.uiData")
+G.controls = require("config.controlConfig")
+G.ui = require("registries.uiReg")
 
 return G
