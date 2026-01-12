@@ -3,7 +3,7 @@
 -- -----------------------------------------------------------------------------
 
 -- inherit from MasterClass
-local MC = require("core.MasterClass")
+local MC = require("core.SystemsMaster")
 local controlSys = setmetatable({}, { __index = MC })
 controlSys.__index = controlSys
 local controls = require("config.controlConfig")

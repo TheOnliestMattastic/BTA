@@ -63,7 +63,7 @@ function EntityMaster:getEntitiesWith(componentType)
 			table.insert(result, entityID)
 		end
 	end
-  return result
+	return result
 end
 
 -- get all entities with all specified components

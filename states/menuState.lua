@@ -3,48 +3,52 @@
 -- WHAT: Main menu state (title screen, initial navigation)
 -- -----------------------------------------------------------------------------
 
-local EM = require("core.EntityMaster")
-local RenderSys = require("sys.renderSys")
-local ControlSys = require("sys.controlSys")
+local RenderSys = require("sys.RenderSys")
+local ControlSys = require("sys.ControlSys")
 local EntityFactory = require("core.EntityFactory")
 
-local menu = {}
-local render = {}
-local ctrls = {}
-local factory = {}
+local menuState = {}
+local RS = {}
+local CS = {}
+local EF = {}
 
 -- =============================================================================
 -- menu.load()
 -- -----------------------------------------------------------------------------
-function menu.load()
+function menuState.load()
+	local uiReg = require("registries.uiReg")
+
 	-- create systems
-	local em = EM.new()
-	render = RenderSys.new(em)
-	ctrls = ControlSys.new(em)
-	factory = EntityFactory.new(em)
+	local EntityMaster = require("core.EntityMaster")
+	local EM = EntityMaster.new()
+	RS = RenderSys.new(EM, uiReg)
+	CS = ControlSys.new(EM)
+	EF = EntityFactory.new(EM)
 
 	-- create menu ui entities from config
-	factory:menuUI("title")
-	factory:menuUI("startButton")
+	EF:menuUI("title")
+	EF:menuUI("startButton")
+
+	-- create canvas
 end
 
 -- =============================================================================
 -- menu.update()
 -- -----------------------------------------------------------------------------
-function menu.update(dt) end
+function menuState.update(dt) end
 
 -- =============================================================================
 -- menu.draw()
 -- -----------------------------------------------------------------------------
-function menu.draw()
-	render:drawMenuUI()
+function menuState.draw()
+	RS:drawState()
 end
 
 -- =============================================================================
 -- menu.keyreleased()
 -- -----------------------------------------------------------------------------
-function menu.keyreleased(key)
-	ctrls:action(key)
+function menuState.keyreleased(key)
+	CS:action(key)
 end
 
-return menu
+return menuState

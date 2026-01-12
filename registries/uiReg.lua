@@ -3,9 +3,9 @@
 -- ----------------------------------------------------------------------------
 
 local uiDir = "assets/sprites/ui/"
+-- stylua: ignore
 return {
-  -- stylua: ignore start
-	-- Bars: UI bar elements
+  -- Bars: UI bar elements
 	bar_1              = { img = uiDir .. "bar_1.png",                        frameW = 96,  frameH = 16 },
 	bar_2              = { img = uiDir .. "bar_2.png",                        frameW = 77,  frameH = 13 },
 	bar_3              = { img = uiDir .. "bar_3.png",                        frameW = 77,  frameH = 16 },
@@ -79,10 +79,10 @@ return {
 	fontXS             = { img = "assets/fonts/alagard.ttf",                  size = 16 },
 	fontXXS            = { img = "assets/fonts/alagard.ttf",                  size = 12 },
 
-	fontXL_alt         = { img = "assets/fonts/NormalFont.ttf",               size = 96 },
-	fontL_alt          = { img = "assets/fonts/NormalFont.ttf",               size = 48 },
-	fontM_alt          = { img = "assets/fonts/NormalFont.ttf",               size = 36 },
-	fontS_alt          = { img = "assets/fonts/NormalFont.ttf",               size = 24 },
-	fontXS_alt         = { img = "assets/fonts/NormalFont.ttf",               size = 16 },
-	fontXXS_alt        = { img = "assets/fonts/NormalFont.ttf",               size = 12 },
+	fontAltXL          = { img = "assets/fonts/NormalFont.ttf",               size = 96 },
+	fontAltL           = { img = "assets/fonts/NormalFont.ttf",               size = 48 },
+	fontAltM           = { img = "assets/fonts/NormalFont.ttf",               size = 36 },
+	fontAltS           = { img = "assets/fonts/NormalFont.ttf",               size = 24 },
+	fontAltXS          = { img = "assets/fonts/NormalFont.ttf",               size = 16 },
+	fontAltXXS         = { img = "assets/fonts/NormalFont.ttf",               size = 12 },
 }
