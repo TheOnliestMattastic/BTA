@@ -1,10 +1,14 @@
 # Battle Tactics Arena: Remastered, Refactored, Reengineered
 
-A turn-based tactical RPG built with **Love2D**. Engage in grid-based combat with a strict Action Point economy, commanding 30+ unique characters that embody classic fantasy archetypes—Warriors, Mages, Rogues, Healers, and more.
+A turn-based tactical RPG built with **Love2D**. Battle Tactics Arena began as a Computer Science final project and is now being developed into a full-featured indie game with an ECS-based engine, grid-based combat, and 30+ unique characters.
 
 ## About
 
-Battle Tactics Arena began as a Computer Science final project and is now being developed into a full-featured indie game for Steam. The remake emphasizes tight tactical design, balanced character abilities, and accessible yet strategic gameplay.
+This project focuses on:
+- **Custom ECS Architecture**: Built from scratch with EntityMaster, EntityFactory, and SystemsMaster
+- **Clean Code Practices**: Modular design, configuration-driven data, and well-documented patterns
+- **Tactical Gameplay**: Grid-based navigation, action point economy, and strategic positioning
+- **Game Development Portfolio**: Demonstrating architecture, systems design, and hobby game development
 
 ## Quick Start
 
@@ -18,20 +22,68 @@ Battle Tactics Arena began as a Computer Science final project and is now being 
 ### Requirements
 
 - 64-bit Linux/Windows/macOS
+- Love2D 11.5+ (included via love.appimage)
 - ~50MB disk space
 
-## Gameplay
+## Architecture
 
-- **Grid-Based Combat**: Position matters. Movement and abilities consume Action Points.
-- **30+ Characters**: Each with distinct abilities, stats, and playstyles.
-- **Action Point Economy**: Resource management is core to strategy—every decision has weight.
-- **Turn-Based**: No time pressure. Plan your moves carefully.
+Built on **Entity-Component-System (ECS)** principles:
 
-## Development Status
+- **Entities**: Game objects (creatures, UI elements, tiles)
+- **Components**: Data structures (Transform, HitPoints, GridPosition, Text, Button)
+- **Systems**: Logic processors (RenderSys, ControlSys, future GameLogicSys)
 
-**Active Development**
+Key modules:
+- `core/`: ECS engine (EntityMaster, EntityFactory, GameMaster)
+- `sys/`: Game systems (rendering, input, future game logic)
+- `states/`: Game modes (menu, gameplay)
+- `registries/`: Asset definitions (creatures, UI sprites, tilesets)
+- `config/`: Data configuration (controls, menu layout)
 
-Core systems implemented. Current focus: gameplay balance, character roster, and full game state.
+See `AGENTS.md` for development guidelines and architecture details.
+
+## Current Status
+
+**Active Development — Early Stage**
+
+### ✅ Completed
+- ECS architecture and entity management
+- Menu state with UI rendering
+- Input system with vim-style keybinds (h/j/k/l navigation)
+- Registries for creatures, UI assets, and tilesets
+- Virtual resolution system (1024x768 target)
+
+### 🚧 In Progress / TODO
+- Game state implementation
+- Creature spawning and stat management
+- Grid-based movement and pathfinding
+- Combat system (action points, damage calculation)
+- Ability system and roster management
+- Character roster implementation (30+ creatures defined)
+- Save/load system
+- Audio system
+
+## Gameplay (Planned)
+
+- **Grid-Based Combat**: Tactical positioning and movement
+- **30+ Characters**: Warriors, Mages, Rogues, Healers, and more—each with unique stats and abilities
+- **Action Point Economy**: Limited resources drive strategic decision-making
+- **Turn-Based**: No time pressure—plan your moves carefully
+
+## Development
+
+### Running the Game
+```bash
+./love.appimage .
+```
+
+### Code Style
+- **Language**: Lua
+- **Naming**: `camelCase` for variables/functions, `PascalCase` for classes
+- **Formatter**: stylua
+- **Comments**: WHAT/WHY/HOW pattern in file headers; explain intent in code blocks
+
+See `AGENTS.md` for full development workflow and conventions.
 
 ## License
 
@@ -40,6 +92,6 @@ Core systems implemented. Current focus: gameplay balance, character roster, and
 ---
 
 **Made with ❤️ and Lua**  
-Targeting Steam publication in 2026.
+Early-stage development; gameplay and balance subject to change.
 
 > "It's fun to have fun but you have to know how." — Shigeru Miyamoto

@@ -1,16 +1,18 @@
 -- =============================================================================
--- classes/SystemsMaster.lua
--- WHAT: Base class for systems
--- -----------------------------------------------------------------------------
+-- core/SystemsMaster.lua
+-- WHAT: Base class for all game systems (input, render, logic, etc.)
+-- WHY: Provides consistent interface and lifecycle (update, draw, enabled state)
+-- HOW: Abstract base with update(dt) and draw() stubs; systems inherit and override
+-- NOTE: All systems must call SystemsMaster.new() in their constructor
+-- =============================================================================
 
 local SystemsMaster = {}
 SystemsMaster.__index = SystemsMaster
 
-function SystemsMaster.new(entityMaster, ui)
+function SystemsMaster.new(entityMaster)
 	local self = setmetatable({}, SystemsMaster)
 	self.enabled = true
 	self.entityMaster = entityMaster
-	self.ui = ui
 	return self
 end
 

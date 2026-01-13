@@ -1,5 +1,11 @@
--- assets/config/tilesetsReg.lua
--- Define img sprite sheets
+-- =============================================================================
+-- registries/tilesetReg.lua
+-- WHAT: Registry of all tileset sprites for terrain and world building
+-- WHY: Centralized asset catalog with scaling and frame metadata
+-- HOW: Maps named tilesets to sprite sheets with frame dimensions and scale factors
+-- NOTE: Scale factor multiplies base frame size (e.g., 16x16 * scale 4 = 64x64)
+-- =============================================================================
+
 local dir = "assets/sprites/tilesets/"
 return {
 	-- bricksAltDark = { img = dir .. "TS_bricksAltDark-16x16.png", frameW = 16, frameH = 16 },

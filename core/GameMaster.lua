@@ -1,23 +1,17 @@
 -- =============================================================================
 -- core/GameMaster.lua
--- -----------------------------------------------------------------------------
--- WHAT: An entity-component-system game engine thematically flavored to invoke
---       the feeling of a cyber-punk Game Master engineering a technologic
---       table top game; catered for grid-based navigation and combat, including
---       a dice-set and sprite animation modules.
---
--- WHY: A centralized engine system with a nostalgic, user-friendly front to
---      accommodate unconventional development backgrounds or approaches.
---
--- stylua: ignore start
--- -----------------------------------------------------------------------------
+-- WHAT: Central game engine; exports ECS system, entity/animation/rendering libraries
+-- WHY: Single import point for all core systems, making game initialization cleaner
+-- HOW: Bundles SystemsMaster, EntityFactory, EntityMaster, and lib (virtual, anim8)
+-- NOTE: Also exports sys modules (ControlSys, RenderSys); requires stylua: ignore
+-- =============================================================================
 
 local GameMaster = {}
 
 -- core
 GameMaster.SystemsMaster = require("core.SystemsMaster")
 GameMaster.EntityFactory = require("core.EntityFactory")
-GameMaster.EntityMaster  = require("core.EntityMaster")
+GameMaster.EntityMaster = require("core.EntityMaster")
 
 -- lib
 GameMaster.virtual = require("lib.virtual")

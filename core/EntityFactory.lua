@@ -1,22 +1,18 @@
 -- =============================================================================
 -- core/EntityFactory.lua
--- WHAT: Factory for creating entities from config templates
--- -----------------------------------------------------------------------------
+-- WHAT: Factory pattern for creating and populating game entities from config
+-- WHY: Decouples entity creation from game logic; allows data-driven UI/entity setup
+-- HOW: Reads config tables and creates entities with Transform, Button, Text, Interactable components
+-- NOTE: Requires EntityMaster instance; setRegistries() and setConfig() must be called before use
+-- =============================================================================
 
 local EntityFactory = {}
 EntityFactory.__index = EntityFactory
+EntityFactory.registries = {}
+EntityFactory.configs = {}
 
 -- components
-local Text = require("components.Text")
-local Button = require("components.Buttons")
-
--- registries
-local ui = require("registries.uiReg")
-local entities = require("registries.creatureReg")
-local tilesets = require("registries.tilesetReg")
-
--- config/templates
-local menuConfig = require("config.menuConfig")
+local Gui = require("components.Gui")
 
 function EntityFactory.new(entityMaster)
 	local self = setmetatable({}, EntityFactory)
@@ -24,9 +20,19 @@ function EntityFactory.new(entityMaster)
 	return self
 end
 
+function EntityFactory:setRegistries(uiRegistry, entityRegistry, tilesetRegistry)
+	self.registries.ui = uiRegistry
+	self.registries.creatures = entityRegistry
+	self.registries.tileset = tilesetRegistry
+end
+
+function EntityFactory:setConfig(config)
+	self.configs = config
+end
+
 -- create ui entities
 function EntityFactory:menuUI(configKey)
-	local entity = menuConfig[configKey]
+	local entity = self.configs[configKey]
 
 	if not entity then
 		return nil
@@ -45,8 +51,8 @@ function EntityFactory:menuUI(configKey)
 
 	-- button
 	if entity.button then
-		local btnData = ui[entity.button]
-		self.entityMaster:addComponent(entityID, "Button", Button.new(btnData))
+		local btnData = self.registries.ui[entity.button]
+		self.entityMaster:addComponent(entityID, "Button", Gui.newButton(btnData))
 	end
 
 	-- interactable
@@ -58,12 +64,13 @@ function EntityFactory:menuUI(configKey)
 
 	-- text
 	if entity.text then
-    --stylua: ignore
-		if not entity.font then entity.font = "fontM" end
-		local fontData = ui[entity.font].img
+		if not entity.font then
+			entity.font = "fontM"
+		end
+		local fontData = self.registries.ui[entity.font]
 
     -- stylua: ignore
-		self.entityMaster:addComponent(entityID, "Text", Text.new(
+		self.entityMaster:addComponent(entityID, "Text", Gui.newText(
 		  entity.text,
       fontData,
 		  entity.xOffset or 0.5

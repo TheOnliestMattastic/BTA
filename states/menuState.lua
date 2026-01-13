@@ -1,7 +1,10 @@
 -- =============================================================================
--- states/menu.lua
--- WHAT: Main menu state (title screen, initial navigation)
--- -----------------------------------------------------------------------------
+-- states/menuState.lua
+-- WHAT: Main menu state with title and start button
+-- WHY: Entry point to game; allows player to initiate combat or configure settings
+-- HOW: Loads entities from menuConfig via EntityFactory; renders with RenderSys and ControlSys
+-- NOTE: load() is called once; update/draw/keyreleased delegated from main.lua
+-- =============================================================================
 
 local RenderSys = require("sys.RenderSys")
 local ControlSys = require("sys.ControlSys")

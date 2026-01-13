@@ -1,8 +1,9 @@
 -- =============================================================================
--- classes/EntityMaster.lua
--- WHAT: Entity manager; tracks entities and their components (component system)
--- WHY: Centralized storage for game entities and their behavioral components
--- HOW: Maps entities to component types; supports queries for entities with components
+-- core/EntityMaster.lua
+-- WHAT: ECS entity manager; tracks entities and their components
+-- WHY: Centralized storage for all game entities and their behavioral components
+-- HOW: Maps entity IDs to component tables; supports queries (getEntitiesWith, getEntitiesWithAll)
+-- NOTE: Entity IDs are auto-incremented integers; components are indexed by type name
 -- =============================================================================
 
 local EntityMaster = {}

@@ -1,20 +1,10 @@
 -- =============================================================================
--- assets/config/creatureReg.lua
+-- registries/creatureReg.lua
 -- -----------------------------------------------------------------------------
--- Define per-class sprite sheet and animations
--- Col (y in frames) = direction (1=down, 2=up, 3=left, 4=right)
--- Row (x in frames) = animation frames
---
--- Stats: hp  = num of health points
---        pwr = num of d3 to roll when attacking/healing
---        def = num of pts to remove from incoming damage
---              (flat reduction with min of 1)
---        dex = num of d4 to roll for accuracy and
---              num of d3 to roll for evasion (attacker vs defender)
---        spd = num of allowed movement spaces per AP 
---              (spd = 3; 1AP = 3 tiles, 2AP = 6 tiles, etc.) and
---              num of d3 to roll for initiative
---        rng = num of tile spaces away from self allowed to attack
+-- WHAT: Registry of all playable creatures with stats, animations, and sprite data
+-- WHY: Centralized creature definitions for roster building and combat mechanics
+-- HOW: Maps creature names to sprite sheets, stats (hp/pwr/def/dex/spd/rng), and anim data
+-- NOTE: Frame rows = animations, cols = direction (1=down,2=up,3=left,4=right); stats use dice notation
 -- -----------------------------------------------------------------------------
 
 local dir = "assets/sprites/chars/"
@@ -501,9 +491,9 @@ return {
 		},
 	},
 
-  -- ===========================================================================
-  -- Sages
-  -- ---------------------------------------------------------------------------
+	-- ===========================================================================
+	-- Sages
+	-- ---------------------------------------------------------------------------
 
 	shaman = {
 		name = "Shaman",

@@ -1,19 +1,23 @@
 -- =============================================================================
--- config/menu.lua
--- WHAT: Menu State data
--- -----------------------------------------------------------------------------
+-- config/menuConfig.lua
+-- WHAT: Menu state configuration (UI elements, positions, colors)
+-- WHY: Data-driven UI setup; separates design data from logic
+-- HOW: Defines entities (title, buttons) with position, text, and action data
+-- NOTE: Position values are screen percentages (0-1); EntityFactory reads this config
+-- =============================================================================
 
 return {
+	bgColor = { 0.3, 0.4, 0.4, 1 },
+
 	title = {
 		text = "Battle Tactis Arena",
 		font = "fontXL",
 		x = 0.5, -- percent of screen
-		y = 0.4,
+		y = 0.3,
 		xOffset = 0.5, -- percent of width
 	},
 
 	startButton = {
-		text = "Play",
 		button = "button_1",
 		action = "startGame",
 		x = 0.5,

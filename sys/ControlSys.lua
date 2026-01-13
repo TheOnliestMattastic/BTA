@@ -1,8 +1,11 @@
 -- =============================================================================
--- sys/controlSys.lua
--- -----------------------------------------------------------------------------
+-- sys/ControlSys.lua
+-- WHAT: Input system; maps keyboard input to game actions
+-- WHY: Decouples input handling from game logic; allows action-based game flow
+-- HOW: Inherits from SystemsMaster; reads controlConfig and dispatches keyreleased events
+-- NOTE: action() matches key to handler; stub handlers print debug output (TODO: implement)
+-- =============================================================================
 
--- inherit from MasterClass
 local MC = require("core.SystemsMaster")
 local controlSys = setmetatable({}, { __index = MC })
 controlSys.__index = controlSys

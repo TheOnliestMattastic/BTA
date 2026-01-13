@@ -1,10 +1,19 @@
 -- =============================================================================
 -- main.lua
--- -----------------------------------------------------------------------------
--- WHAT: Core game loop and state management for Battle Tactics Arena
--- WHY: Centralized lifecycle and state transitions using Love2D callbacks
--- HOW: Implements love.load/update/draw/keypressed hooks; routes to state modules
--- -----------------------------------------------------------------------------
+-- WHAT: Entry point for game; loads registries, manages state transitions
+-- WHY: Initializes game engine and wires up state machine for menu/game modes
+-- HOW: Requires registries/configs, creates EntityFactory, implements love.* lifecycle callbacks
+-- NOTE: State callbacks (load, update, draw, keyreleased, keypressed) delegated to active state
+-- =============================================================================
+
+local uiReg = require("registries.uiReg")
+local creatureReg = require("registries.creatureReg")
+local tilesetsReg = require("registries.tilesetReg")
+local menuConfig = require("config.menuConfig")
+
+local EntityFactory = require("core.EntityFactory")
+EntityFactory:setRegistries(uiReg, creatureReg, tilesetsReg)
+EntityFactory:setConfig(menuConfig)
 
 -- state manager
 -- TODO: extract into module

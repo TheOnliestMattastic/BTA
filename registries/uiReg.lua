@@ -1,6 +1,11 @@
--- ============================================================================
--- assets/config/uiReg.lua
--- ----------------------------------------------------------------------------
+-- =============================================================================
+-- registries/uiReg.lua
+-- -----------------------------------------------------------------------------
+-- WHAT: Registry of all UI sprites, buttons, patterns, and fonts
+-- WHY: Centralized definition of UI assets for easy reference and modification
+-- HOW: Returns a table mapping keys to sprite sheet metadata (image path, dimensions)
+-- NOTE: stylua: ignore applied to preserve formatting; frame dimensions in pixels
+-- -----------------------------------------------------------------------------
 
 local uiDir = "assets/sprites/ui/"
 -- stylua: ignore

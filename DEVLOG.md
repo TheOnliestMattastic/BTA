@@ -68,4 +68,46 @@
 
 ---
 
-**Status**: Mid-refactor. Architecture solidified; now building gameplay systems.
+## [2025-01-13] [ongoing]
+
+### What I Did
+
+- **Architecture Clarification**: Deepened understanding of ECS principles vs. organizational conventions
+  - Discussed component vs. factory distinction (not purely file-based, but architectural role)
+  - Established guidelines: components *represent* entity attributes; factories/systems *create/process* entities
+  - Decided to keep Gui.lua combined for engine UX convenience (valid hobbiest deviation from strict pattern)
+
+- **Documentation Updates**: 
+  - Added WHAT/WHY/HOW/NOTE headers to all 18 .lua files (consistent with AGENTS.md standard)
+  - Updated AGENTS.md with complete Architecture Overview section (ECS pattern, key modules, file structure)
+  - Added "Component vs. Factory Guidelines" section clarifying design decisions
+  - Expanded "Architecture Principles" to emphasize composability and centralized APIs
+  - Added "Current Development Status" section with completed vs. in-progress items
+
+- **README.md Overhaul**:
+  - Repositioned project focus toward architecture and development practices
+  - Added Architecture section explaining ECS principles and module organization
+  - Changed status section to "Current Status — Early Stage" with ✅ completed and 🚧 in-progress markers
+  - Moved gameplay features to "Gameplay (Planned)" section to clarify they're aspirational
+  - Removed "Targeting Steam publication in 2026" (more honest about early-stage status)
+  - Added Development section with code style guidelines and AGENTS.md reference
+
+### Key Insights
+
+- **Convention vs. Principle**: File organization is an implementation detail; ECS cares about queryability, composability, and logic separation
+- **Hobbiest QOL**: Justified combining Gui.lua as a UX convenience for the engine's API (similar to Unity's ButtonBundle pattern)
+- **Documentation as Design**: Keeping AGENTS.md and README.md in sync forces clarity about architectural decisions and project maturity
+
+### Next Steps
+
+- [ ] Implement game state with creature spawning
+- [ ] Build grid-based movement system
+- [ ] Create combat loop with action point economy
+- [ ] Implement ability system and creature roster
+- [ ] Add turn-based state machine
+- [ ] Create save/load system
+- [ ] Implement audio system
+
+---
+
+**Status**: Architecture solidified and documented. Ready to build gameplay systems (game state, creature management, grid movement).
