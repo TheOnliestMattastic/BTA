@@ -10,26 +10,30 @@ local SystemsMaster = require("core.SystemsMaster")
 local RenderSys = setmetatable({}, { __index = SystemsMaster })
 RenderSys.__index = RenderSys
 
-function RenderSys.new(entityMaster, uiReg)
+function RenderSys.new(entityMaster)
 	local self = setmetatable(SystemsMaster.new(entityMaster), RenderSys)
 	self.VIR = require("lib.virtual")
-	self.ui = uiReg
 	return self
 end
 
-function RenderSys:drawState()
+function RenderSys:drawMenuState()
+	-- render background
+	local bgEntities = self.entityMaster:getEntitiesWith("Background")
+  -- print(bgEntities)
+	for _, id in ipairs(bgEntities) do
+    print(id)
+		local bgColor = self.entityMaster:getComponent(id, "Background")
+		love.graphics.clear(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
+		print(bgColor)
+	end
+
 	-- render text
 	local textEntities = self.entityMaster:getEntitiesWith("Text")
 	for _, id in ipairs(textEntities) do
-		local transform = self.entityMaster:getComponent(id, "Transform")
+		local transform = self.entityMaster:getComponent(id, "Position")
 		local text = self.entityMaster:getComponent(id, "Text")
 
-		local font
-		if not text.font then
-			font = love.graphics.newFont(self.ui.fontM.img, self.ui.fontM.size)
-		else
-			font = love.graphics.newFont(text.font.img, text.font.size)
-		end
+		local font = love.graphics.newFont(text.font.img, text.font.size)
 
 		-- get text width
 		local textW = font:getWidth(text.text)
@@ -45,15 +49,6 @@ function RenderSys:drawState()
 		  self.VIR.WIDTH * transform.x - textW * text.xOffset,
 		  self.VIR.HEIGHT * transform.y
 		)
-	end
-
-	-- render buttons
-	local buttonEntities = self.entityMaster:getEntitiesWith("Button")
-	for _, id in ipairs(buttonEntities) do
-		local transform = self.entityMaster:getComponent(id, "Transform")
-		local ui = self.entityMaster:getComponent(id, "Button")
-		local elementKey = ui.element
-		local elementData = self.ui[elementKey]
 	end
 end
 

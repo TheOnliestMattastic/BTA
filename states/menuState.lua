@@ -1,14 +1,11 @@
 -- =============================================================================
 -- states/menuState.lua
+-- -----------------------------------------------------------------------------
 -- WHAT: Main menu state with title and start button
 -- WHY: Entry point to game; allows player to initiate combat or configure settings
 -- HOW: Loads entities from menuConfig via EntityFactory; renders with RenderSys and ControlSys
 -- NOTE: load() is called once; update/draw/keyreleased delegated from main.lua
--- =============================================================================
-
-local RenderSys = require("sys.RenderSys")
-local ControlSys = require("sys.ControlSys")
-local EntityFactory = require("core.EntityFactory")
+-- -----------------------------------------------------------------------------
 
 local menuState = {}
 local RS = {}
@@ -19,18 +16,26 @@ local EF = {}
 -- menu.load()
 -- -----------------------------------------------------------------------------
 function menuState.load()
-	local uiReg = require("registries.uiReg")
+	-- load systems
+	local EntityMaster = require("core.EntityMaster")
+	local RenderSys = require("sys.RenderSys")
+  local ControlSys = require("sys.ControlSys")
+
+	-- initialize entity factory
+	local menuConfig = require("config.menuConfig")
+	local EntityFactory = require("core.EntityFactory")
+	EntityFactory:setConfig(menuConfig)
 
 	-- create systems
-	local EntityMaster = require("core.EntityMaster")
 	local EM = EntityMaster.new()
-	RS = RenderSys.new(EM, uiReg)
+	RS = RenderSys.new(EM)
 	CS = ControlSys.new(EM)
 	EF = EntityFactory.new(EM)
 
 	-- create menu ui entities from config
-	EF:menuUI("title")
-	EF:menuUI("startButton")
+	EF:assembleEntity("title")
+	EF:assembleEntity("startButton")
+	EF:assembleEntity("bgColor")
 
 	-- create canvas
 end
@@ -44,7 +49,7 @@ function menuState.update(dt) end
 -- menu.draw()
 -- -----------------------------------------------------------------------------
 function menuState.draw()
-	RS:drawState()
+	RS:drawMenuState()
 end
 
 -- =============================================================================

@@ -31,7 +31,7 @@ function EntityFactory:setConfig(config)
 end
 
 -- create ui entities
-function EntityFactory:menuUI(configKey)
+function EntityFactory:assembleEntity(configKey)
 	local entity = self.configs[configKey]
 
 	if not entity then
@@ -42,12 +42,28 @@ function EntityFactory:menuUI(configKey)
 	-- add components
 	-- ---------------------------------------------------------------------------
 	local entityID = self.entityMaster:createEntity()
+	-- backgrounds
+  -- stylua: ignore
+	if entity.r then
+		self.entityMaster:addComponent(
+			entityID,
+			"Background",
+			Gui.newBgColor(
+				entity.r,
+				entity.g,
+				entity.b,
+				entity.a
+			)
+		)
+	end
 
 	-- transform
-	self.entityMaster:addComponent(entityID, "Transform", {
-		x = entity.x,
-		y = entity.y,
-	})
+	if entity.x and entity.y then
+		self.entityMaster:addComponent(entityID, "Position", {
+			x = entity.x,
+			y = entity.y,
+		})
+	end
 
 	-- button
 	if entity.button then
@@ -63,16 +79,16 @@ function EntityFactory:menuUI(configKey)
 	end
 
 	-- text
+  -- stylua: ignore
 	if entity.text then
 		if not entity.font then
 			entity.font = "fontM"
 		end
 		local fontData = self.registries.ui[entity.font]
-
-    -- stylua: ignore
+		entity.font = fontData
 		self.entityMaster:addComponent(entityID, "Text", Gui.newText(
 		  entity.text,
-      fontData,
+		  entity.font,
 		  entity.xOffset or 0.5
 		))
 	end

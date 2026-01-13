@@ -7,17 +7,18 @@
 -- =============================================================================
 
 local MC = require("core.SystemsMaster")
-local controlSys = setmetatable({}, { __index = MC })
-controlSys.__index = controlSys
+local ControlSys = setmetatable({}, { __index = MC })
+ControlSys.__index = ControlSys
 local controls = require("config.controlConfig")
 
-function controlSys.new(entityMaster)
-	local self = setmetatable(MC.new(entityMaster), controlSys)
+function ControlSys.new(entityMaster)
+	local self = setmetatable(MC.new(entityMaster), ControlSys)
 	self.keys = controls
 	return self
 end
 
-function controlSys:action(key)
+-- stylua: ignore
+function ControlSys:action(key)
 	-- match key to action
 	local action
 	for actionName, keyValue in pairs(self.keys) do
@@ -27,19 +28,18 @@ function controlSys:action(key)
 		end
 	end
 
-	-- action dispatch table
+  -- action dispatch table
 	local handlers = {
-    -- stylua: ignore start
-		ESC     = function() love.event.quit() end,
-		LEFT    = function() self:moveLEFT() end,
-		DOWN    = function() self:moveDOWN() end,
-		UP      = function() self:moveUP() end,
-		RIGHT   = function() self:moveRIGHT() end,
-		QUIT    = function() self:QUIT() end,
-		CONFIRM = function() self:CONFIRM() end,
-		SELECT  = function() self:SELECT() end,
-		MOVE    = function() self:MOVE() end,
-		ATTACK  = function() self:ATTACK() end,
+		ESC          = function() love.event.quit() end,
+		MOVE_LEFT    = function() self:moveLEFT() end,
+		MOVE_DOWN    = function() self:moveDOWN() end,
+		MOVE_UP      = function() self:moveUP() end,
+		MOVE_RIGHT   = function() self:moveRIGHT() end,
+		QUIT         = function() self:QUIT() end,
+		CONFIRM      = function() self:CONFIRM() end,
+		SELECT       = function() self:SELECT() end,
+		MOVE         = function() self:MOVE() end,
+		ATTACK       = function() self:ATTACK() end,
 	}
 
 	if handlers[action] then
@@ -48,40 +48,40 @@ function controlSys:action(key)
 end
 
 -- TODO: configure with appropriate action
-function controlSys:moveLEFT()
+function ControlSys:moveLEFT()
 	print("LEFT")
 end
 
-function controlSys:moveDOWN()
+function ControlSys:moveDOWN()
 	print("DOWN")
 end
 
-function controlSys:moveUP()
+function ControlSys:moveUP()
 	print("UP")
 end
 
-function controlSys:moveRIGHT()
+function ControlSys:moveRIGHT()
 	print("RIGHT")
 end
 
-function controlSys:QUIT()
+function ControlSys:QUIT()
 	print("QUIT")
 end
 
-function controlSys:CONFIRM()
+function ControlSys:CONFIRM()
 	print("CONFIRM")
 end
 
-function controlSys:SELECT()
+function ControlSys:SELECT()
 	print("SELECT")
 end
 
-function controlSys:MOVE()
+function ControlSys:MOVE()
 	print("MOVE")
 end
 
-function controlSys:ATTACK()
+function ControlSys:ATTACK()
 	print("ATTACK")
 end
 
-return controlSys
+return ControlSys

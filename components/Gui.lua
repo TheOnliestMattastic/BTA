@@ -27,4 +27,13 @@ function Gui.newButton(buttonData)
 	}
 end
 
+function Gui.newBgColor(r, g, b, a)
+	return {
+		r = r or 1,
+		g = g or 1,
+		b = b or 1,
+		a = a or 1,
+	}
+end
+
 return Gui
