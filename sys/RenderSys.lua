@@ -17,22 +17,20 @@ function RenderSys.new(entityMaster)
 end
 
 function RenderSys:drawMenuState()
-	-- render background
+	-- draw background
 	local bgEntities = self.entityMaster:getEntitiesWith("Background")
-  -- print(bgEntities)
 	for _, id in ipairs(bgEntities) do
-    print(id)
+		print(id)
 		local bgColor = self.entityMaster:getComponent(id, "Background")
 		love.graphics.clear(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 		print(bgColor)
 	end
 
-	-- render text
+	-- draw text
 	local textEntities = self.entityMaster:getEntitiesWith("Text")
 	for _, id in ipairs(textEntities) do
-		local transform = self.entityMaster:getComponent(id, "Position")
+		local coords = self.entityMaster:getComponent(id, "Coords")
 		local text = self.entityMaster:getComponent(id, "Text")
-
 		local font = love.graphics.newFont(text.font.img, text.font.size)
 
 		-- get text width
@@ -42,13 +40,15 @@ function RenderSys:drawMenuState()
 		end
 
 		love.graphics.setFont(font)
+		love.graphics.print(text.text, self.VIR.WIDTH * coords.x - textW * text.xOffset, self.VIR.HEIGHT * coords.y)
+	end
 
-    -- stylua: ignore
-		love.graphics.print(
-		  text.text,
-		  self.VIR.WIDTH * transform.x - textW * text.xOffset,
-		  self.VIR.HEIGHT * transform.y
-		)
+	-- draw button
+	local btnEntities = self.entityMaster:getEntitiesWith("Button")
+	for _, id in ipairs(btnEntities) do
+		local coords = self.entityMaster:getComponent(id, "Coords")
+		local btn = self.entityMaster:getComponent(id, "Button``")
+		local quads = {}
 	end
 end
 

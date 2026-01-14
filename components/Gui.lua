@@ -8,6 +8,7 @@
 
 local Gui = {}
 
+-- text
 function Gui.newText(text, font, xOffset)
 	assert(xOffset >= 0 and xOffset <= 1, "xOffset expects an int!")
 	return {
@@ -17,16 +18,19 @@ function Gui.newText(text, font, xOffset)
 	}
 end
 
-function Gui.newButton(buttonData)
+-- buttons
+function Gui.newButton(img, w, h, frames, action)
 	return {
-		img = buttonData.img,
-		frameW = buttonData.frameW,
-		frameH = buttonData.frameH,
-		frames = buttonData.frames,
+		img = img,
+		frameW = w,
+		frameH = h,
+		frames = frames,
 		state = 0,
+		action = action or nil,
 	}
 end
 
+-- background
 function Gui.newBgColor(r, g, b, a)
 	return {
 		r = r or 1,

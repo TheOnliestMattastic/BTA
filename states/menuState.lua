@@ -19,7 +19,7 @@ function menuState.load()
 	-- load systems
 	local EntityMaster = require("core.EntityMaster")
 	local RenderSys = require("sys.RenderSys")
-  local ControlSys = require("sys.ControlSys")
+	local ControlSys = require("sys.ControlSys")
 
 	-- initialize entity factory
 	local menuConfig = require("config.menuConfig")
@@ -33,9 +33,9 @@ function menuState.load()
 	EF = EntityFactory.new(EM)
 
 	-- create menu ui entities from config
-	EF:assembleEntity("title")
-	EF:assembleEntity("startButton")
-	EF:assembleEntity("bgColor")
+	EF:create("bgColor")
+	EF:create("title")
+	EF:create("startButton")
 
 	-- create canvas
 end

@@ -1,10 +1,11 @@
 -- =============================================================================
 -- config/menuConfig.lua
+-- -----------------------------------------------------------------------------
 -- WHAT: Menu state configuration (UI elements, positions, colors)
 -- WHY: Data-driven UI setup; separates design data from logic
 -- HOW: Defines entities (title, buttons) with position, text, and action data
 -- NOTE: Position values are screen percentages (0-1); EntityFactory reads this config
--- =============================================================================
+-- -----------------------------------------------------------------------------
 
 return {
 	bgColor = {
