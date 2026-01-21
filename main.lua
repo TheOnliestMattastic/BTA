@@ -44,16 +44,17 @@ function love.load()
 	local uiReg = require("registries.uiReg")
 	local creatureReg = require("registries.creatureReg")
 	local tilesetsReg = require("registries.tilesetReg")
+	local EntityFactory = require("core.EntityFactory")
 
 	-- initialize entity factory
-	local EntityFactory = require("core.EntityFactory")
 	EntityFactory:setRegistries(uiReg, creatureReg, tilesetsReg)
 
+	-- switch state
 	SwitchState("menu")
 end
 
 -- =============================================================================
--- love.update
+-- pass love.update to states
 -- -----------------------------------------------------------------------------
 
 function love.update(dt)
@@ -63,7 +64,7 @@ function love.update(dt)
 end
 
 -- =============================================================================
--- love.draw
+-- pass love.draw to states
 -- -----------------------------------------------------------------------------
 
 function love.draw()
@@ -73,7 +74,7 @@ function love.draw()
 end
 
 -- =============================================================================
--- input
+-- pass input to states
 -- -----------------------------------------------------------------------------
 
 function love.keyreleased(key)

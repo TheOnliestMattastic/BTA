@@ -8,53 +8,62 @@
 -- -----------------------------------------------------------------------------
 
 local menuState = {}
+local menuConfig = require("config.menuConfig")
+local VIR = require("lib.virtual")
 local RS = {}
 local CS = {}
 local EF = {}
+local canvas = {}
 
 -- =============================================================================
 -- menu.load()
 -- -----------------------------------------------------------------------------
+
 function menuState.load()
-	-- load systems
+	-- load dependencies
 	local EntityMaster = require("core.EntityMaster")
 	local RenderSys = require("sys.RenderSys")
 	local ControlSys = require("sys.ControlSys")
-
-	-- initialize entity factory
-	local menuConfig = require("config.menuConfig")
 	local EntityFactory = require("core.EntityFactory")
-	EntityFactory:setConfig(menuConfig)
 
-	-- create systems
+	-- initialize systems
 	local EM = EntityMaster.new()
 	RS = RenderSys.new(EM)
 	CS = ControlSys.new(EM)
 	EF = EntityFactory.new(EM)
 
-	-- create menu ui entities from config
-	EF:create("bgColor")
-	EF:create("title")
-	EF:create("startButton")
+	-- create entities from config
+	EF:create("bgColor", menuConfig)
+	EF:create("title", menuConfig)
+	EF:create("startButton", menuConfig)
 
-	-- create canvas
+	canvas = love.graphics.newCanvas()
 end
 
 -- =============================================================================
 -- menu.update()
 -- -----------------------------------------------------------------------------
-function menuState.update(dt) end
+
+function menuState.update(dt)
+	RS:update()
+end
+
+function menuState.resize(w, h)
+	VIR.scaleScreen()
+end
 
 -- =============================================================================
 -- menu.draw()
 -- -----------------------------------------------------------------------------
+
 function menuState.draw()
-	RS:drawMenuState()
+	RS:drawState(canvas)
 end
 
 -- =============================================================================
 -- menu.keyreleased()
 -- -----------------------------------------------------------------------------
+
 function menuState.keyreleased(key)
 	CS:action(key)
 end

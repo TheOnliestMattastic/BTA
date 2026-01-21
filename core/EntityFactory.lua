@@ -16,25 +16,23 @@ EntityFactory.configs = {}
 local Gui = require("components.Gui")
 local Coords = require("components.Coords")
 
+-- set per state
 function EntityFactory.new(entityMaster)
 	local self = setmetatable({}, EntityFactory)
 	self.entityMaster = entityMaster
 	return self
 end
 
+-- set in main.lua
 function EntityFactory:setRegistries(uiRegistry, entityRegistry, tilesetRegistry)
 	self.registries.ui = uiRegistry
 	self.registries.creatures = entityRegistry
 	self.registries.tileset = tilesetRegistry
 end
 
-function EntityFactory:setConfig(config)
-	self.configs = config
-end
-
--- create ui entities
-function EntityFactory:create(configKey)
-	local entity = self.configs[configKey]
+-- create entities from config
+function EntityFactory:create(key, config)
+	local entity = config[key]
 
 	if not entity then
 		return nil
@@ -46,8 +44,12 @@ function EntityFactory:create(configKey)
 
 	-- backgrounds
 	local entityID = self.entityMaster:createEntity()
-	if entity.r then
-		self.entityMaster:addComponent(entityID, "Background", Gui.newBgColor(entity.r, entity.g, entity.b, entity.a))
+	if entity.r and entity.g and entity.b then
+		self.entityMaster:addComponent(
+			entityID,
+			"Background",
+			Gui.newBgColor(entity.r, entity.g, entity.b, entity.a or 1)
+		)
 	end
 
 	-- coordinates
@@ -55,10 +57,30 @@ function EntityFactory:create(configKey)
 		self.entityMaster:addComponent(entityID, "Coords", Coords.new(entity.x or 0, entity.y or 0))
 	end
 
+	-- text
+	if entity.text then
+		if not entity.font then
+			entity.font = "fontM"
+		end
+		entity.font = self.registries.ui[entity.font]
+		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
+	end
+
 	-- button
 	if entity.button then
-		local btnData = self.registries.ui[entity.button]
-		self.entityMaster:addComponent(entityID, "Button", Gui.newButton(btnData, entity.w, entity.h, btnData.frames))
+		entity.data = self.registries.ui[entity.button]
+		entity.quads = {}
+		entity.img = love.graphics.newImage(entity.data.img)
+		local states = entity.img:getWidth() / entity.data.frameW
+		for state = 0, states - 1 do
+			entity.quads[state] =
+				love.graphics.newQuad(state * entity.data.frameW, 0, entity.data.frameW, entity.data.frameH, entity.img)
+		end
+		self.entityMaster:addComponent(
+			entityID,
+			"Button",
+			Gui.newButton(entity.data, entity.img, entity.quads, entity.w, entity.h)
+		)
 	end
 
 	-- action
@@ -67,17 +89,6 @@ function EntityFactory:create(configKey)
 			action = entity.action,
 		})
 	end
-
-	-- text
-	if entity.text then
-		if not entity.font then
-			entity.font = "fontM"
-		end
-		local fontData = self.registries.ui[entity.font]
-		entity.font = fontData
-		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
-	end
-
 	return entityID
 end
 

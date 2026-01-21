@@ -16,14 +16,13 @@ function RenderSys.new(entityMaster)
 	return self
 end
 
-function RenderSys:drawMenuState()
+function RenderSys:drawState(canvas)
+	love.graphics.setCanvas(canvas)
 	-- draw background
 	local bgEntities = self.entityMaster:getEntitiesWith("Background")
 	for _, id in ipairs(bgEntities) do
-		print(id)
 		local bgColor = self.entityMaster:getComponent(id, "Background")
 		love.graphics.clear(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
-		print(bgColor)
 	end
 
 	-- draw text
@@ -47,8 +46,24 @@ function RenderSys:drawMenuState()
 	local btnEntities = self.entityMaster:getEntitiesWith("Button")
 	for _, id in ipairs(btnEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
-		local btn = self.entityMaster:getComponent(id, "Button``")
-		local quads = {}
+		local btn = self.entityMaster:getComponent(id, "Button")
+		local sx = btn.width * self.VIR.WIDTH / btn.frameW
+		local sy = btn.height * self.VIR.HEIGHT / btn.frameH
+		local offset = btn.btn:getWidth() / 2
+
+		love.graphics.draw(
+			btn.btn,
+			btn.quads[0],
+			coords.x * self.VIR.WIDTH - offset,
+			coords.y * self.VIR.HEIGHT,
+			0,
+			sx,
+			sy
+		)
+	end
+	love.graphics.setCanvas()
+	if self.VIR.scale and self.VIR.scale > 0 then
+		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)
 	end
 end
 

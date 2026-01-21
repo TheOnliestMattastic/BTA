@@ -24,8 +24,8 @@ return {
 	},
 
 	startButton = {
-		button = "button_1",
-		action = "startGame",
+		button = "button_2",
+		-- action = "startGame",
 		x = 0.5,
 		y = 0.75,
 		w = 0.5,

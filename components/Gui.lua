@@ -8,9 +8,19 @@
 
 local Gui = {}
 
+-- background
+function Gui.newBgColor(r, g, b, a)
+	return {
+		r = r or 1,
+		g = g or 1,
+		b = b or 1,
+		a = a or 1,
+	}
+end
+
 -- text
 function Gui.newText(text, font, xOffset)
-	assert(xOffset >= 0 and xOffset <= 1, "xOffset expects an int!")
+	assert(xOffset >= 0 and xOffset <= 1, "xOffset expects an int between 0-1!")
 	return {
 		text = text,
 		font = font,
@@ -19,24 +29,16 @@ function Gui.newText(text, font, xOffset)
 end
 
 -- buttons
-function Gui.newButton(img, w, h, frames, action)
+function Gui.newButton(data,img, quads, width, height, text, font)
 	return {
-		img = img,
-		frameW = w,
-		frameH = h,
-		frames = frames,
-		state = 0,
-		action = action or nil,
-	}
-end
-
--- background
-function Gui.newBgColor(r, g, b, a)
-	return {
-		r = r or 1,
-		g = g or 1,
-		b = b or 1,
-		a = a or 1,
+		btn = img,
+		quads = quads,
+		width = width,
+		height = height,
+		frameW = data.frameW,
+		frameH = data.frameH,
+		text = text or nil,
+		font = font or nil,
 	}
 end
 
