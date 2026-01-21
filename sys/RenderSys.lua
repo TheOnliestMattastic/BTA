@@ -1,9 +1,10 @@
 -- =============================================================================
 -- sys/RenderSys.lua
--- WHAT: Rendering system; draws entities (Text, Button) to screen via Love2D
--- WHY: Separates rendering logic from entity/component storage; centralizes draw calls
--- HOW: Inherits from SystemsMaster; queries entities by component type; uses virtual resolution
--- NOTE: drawState() renders Text and Button entities; update() calls virtual.scaleScreen()
+-- WHAT: Renders all drawable entities (backgrounds, text, buttons) to canvas
+-- WHY:  Centralizes rendering logic; separates drawing from game logic
+-- HOW:  System queries entityMaster for entities with drawable components,
+--       calculates screen positions using virtual resolution, draws to canvas
+-- NOTE: Virtual resolution ensures consistent scaling across different screen sizes
 -- =============================================================================
 
 local SystemsMaster = require("core.SystemsMaster")
@@ -17,50 +18,48 @@ function RenderSys.new(entityMaster)
 end
 
 function RenderSys:drawState(canvas)
+	-- Set render target to canvas (all drawing goes here until reset)
 	love.graphics.setCanvas(canvas)
-	-- draw background
+
+	-- Clear canvas by drawing background color
 	local bgEntities = self.entityMaster:getEntitiesWith("Background")
 	for _, id in ipairs(bgEntities) do
 		local bgColor = self.entityMaster:getComponent(id, "Background")
 		love.graphics.clear(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 	end
 
-	-- draw text
+	-- Render text entities (convert virtual coords to screen coords with alignment)
 	local textEntities = self.entityMaster:getEntitiesWith("Text")
 	for _, id in ipairs(textEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
 		local text = self.entityMaster:getComponent(id, "Text")
-		local font = love.graphics.newFont(text.font.img, text.font.size)
 
-		-- get text width
+		local font = love.graphics.newFont(text.font.img, text.font.size)
 		local textW = font:getWidth(text.text)
-		if not text.xOffset then
-			text.xOffset = 0
-		end
+		local textX = (coords.x * self.VIR.WIDTH) - (textW * text.xOffset)
+		local textY = coords.y * self.VIR.HEIGHT
 
 		love.graphics.setFont(font)
-		love.graphics.print(text.text, self.VIR.WIDTH * coords.x - textW * text.xOffset, self.VIR.HEIGHT * coords.y)
+		love.graphics.print(text.text, textX, textY)
 	end
 
-	-- draw button
+	-- Render button entities (scale sprite to virtual dimensions, apply offset)
 	local btnEntities = self.entityMaster:getEntitiesWith("Button")
 	for _, id in ipairs(btnEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
 		local btn = self.entityMaster:getComponent(id, "Button")
-		local sx = btn.width * self.VIR.WIDTH / btn.frameW
-		local sy = btn.height * self.VIR.HEIGHT / btn.frameH
-		local offset = btn.btn:getWidth() / 2
 
-		love.graphics.draw(
-			btn.btn,
-			btn.quads[0],
-			coords.x * self.VIR.WIDTH - offset,
-			coords.y * self.VIR.HEIGHT,
-			0,
-			sx,
-			sy
-		)
+		local btnW = btn.width * self.VIR.WIDTH
+		local btnH = btn.height * self.VIR.HEIGHT
+		local btnX = (coords.x * self.VIR.WIDTH) - (btnW * btn.xOffset)
+		local btnY = (coords.y * self.VIR.HEIGHT) - (btnH * btn.xOffset)
+		local sx = btnW / btn.frameW
+		local sy = btnH / btn.frameH
+
+		love.graphics.draw(btn.btn, btn.quads[0], btnX, btnY, 0, sx, sy)
 	end
+
+	-- Reset canvas target and apply virtual resolution scaling to final output
 	love.graphics.setCanvas()
 	if self.VIR.scale and self.VIR.scale > 0 then
 		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)
@@ -68,8 +67,7 @@ function RenderSys:drawState(canvas)
 end
 
 function RenderSys:update(dt)
-	local V = require("lib.virtual")
-	V.scaleScreen()
+	self.VIR.scaleScreen()
 end
 
 return RenderSys

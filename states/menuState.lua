@@ -8,12 +8,10 @@
 -- -----------------------------------------------------------------------------
 
 local menuState = {}
-local menuConfig = require("config.menuConfig")
-local VIR = require("lib.virtual")
+local canvas = {}
 local RS = {}
 local CS = {}
 local EF = {}
-local canvas = {}
 
 -- =============================================================================
 -- menu.load()
@@ -21,6 +19,7 @@ local canvas = {}
 
 function menuState.load()
 	-- load dependencies
+	local menuConfig = require("config.menuConfig")
 	local EntityMaster = require("core.EntityMaster")
 	local RenderSys = require("sys.RenderSys")
 	local ControlSys = require("sys.ControlSys")
@@ -37,6 +36,7 @@ function menuState.load()
 	EF:create("title", menuConfig)
 	EF:create("startButton", menuConfig)
 
+	-- create canavas
 	canvas = love.graphics.newCanvas()
 end
 
@@ -46,10 +46,6 @@ end
 
 function menuState.update(dt)
 	RS:update()
-end
-
-function menuState.resize(w, h)
-	VIR.scaleScreen()
 end
 
 -- =============================================================================

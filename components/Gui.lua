@@ -24,12 +24,12 @@ function Gui.newText(text, font, xOffset)
 	return {
 		text = text,
 		font = font,
-		xOffset = xOffset,
+		xOffset = xOffset or 0.5,
 	}
 end
 
 -- buttons
-function Gui.newButton(data,img, quads, width, height, text, font)
+function Gui.newButton(data, img, quads, width, height, xOffset, text, font)
 	return {
 		btn = img,
 		quads = quads,
@@ -37,6 +37,7 @@ function Gui.newButton(data,img, quads, width, height, text, font)
 		height = height,
 		frameW = data.frameW,
 		frameH = data.frameH,
+    xOffset = xOffset or 0.5,
 		text = text or nil,
 		font = font or nil,
 	}

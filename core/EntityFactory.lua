@@ -63,7 +63,11 @@ function EntityFactory:create(key, config)
 			entity.font = "fontM"
 		end
 		entity.font = self.registries.ui[entity.font]
-		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
+		self.entityMaster:addComponent(
+		  entityID,
+		  "Text",
+		  Gui.newText(entity.text, entity.font, entity.xOffset or 0.5)
+		)
 	end
 
 	-- button
@@ -79,7 +83,14 @@ function EntityFactory:create(key, config)
 		self.entityMaster:addComponent(
 			entityID,
 			"Button",
-			Gui.newButton(entity.data, entity.img, entity.quads, entity.w, entity.h)
+			Gui.newButton(
+			  entity.data,
+			  entity.img,
+			  entity.quads,
+			  entity.w,
+			  entity.h,
+			  entity.xOffset
+			)
 		)
 	end
 
