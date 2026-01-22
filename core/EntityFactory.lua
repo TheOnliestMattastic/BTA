@@ -1,22 +1,19 @@
 -- =============================================================================
 -- core/EntityFactory.lua
--- -----------------------------------------------------------------------------
--- WHAT: Factory pattern for creating and populating game entities from config
--- WHY: Decouples entity creation from game logic; allows data-driven UI/entity setup
--- HOW: Reads config tables and creates entities with Transform, Button, Text, Interactable components
--- NOTE: Requires EntityMaster instance; setRegistries() and setConfig() must be called before use
--- -----------------------------------------------------------------------------
+-- WHAT: Creates entities from configuration by instantiating components
+-- WHY:  Decouples entity creation logic from game code; allows data-driven entity definitions
+-- HOW:  Takes a config key and registry data, creates entity in EntityMaster, attaches components based on config fields
+-- NOTE: Registries must be set via setRegistries() before calling create()
+-- =============================================================================
 
 local EntityFactory = {}
 EntityFactory.__index = EntityFactory
 EntityFactory.registries = {}
 EntityFactory.configs = {}
 
--- components
 local Gui = require("components.Gui")
 local Coords = require("components.Coords")
 
--- set per state
 function EntityFactory.new(entityMaster)
 	local self = setmetatable({}, EntityFactory)
 	self.entityMaster = entityMaster
@@ -30,7 +27,7 @@ function EntityFactory:setRegistries(uiRegistry, entityRegistry, tilesetRegistry
 	self.registries.tileset = tilesetRegistry
 end
 
--- create entities from config
+-- Create entity from config table, instantiate components based on config fields
 function EntityFactory:create(key, config)
 	local entity = config[key]
 
@@ -38,12 +35,9 @@ function EntityFactory:create(key, config)
 		return nil
 	end
 
-	-- ---------------------------------------------------------------------------
-	-- add components
-	-- ---------------------------------------------------------------------------
-
-	-- backgrounds
 	local entityID = self.entityMaster:createEntity()
+
+	-- Attach background color component if RGB values provided
 	if entity.r and entity.g and entity.b then
 		self.entityMaster:addComponent(
 			entityID,
@@ -52,12 +46,12 @@ function EntityFactory:create(key, config)
 		)
 	end
 
-	-- coordinates
+	-- Attach position component for renderable entities
 	if entity.x and entity.y then
 		self.entityMaster:addComponent(entityID, "Coords", Coords.new(entity.x or 0, entity.y or 0))
 	end
 
-	-- button
+	-- Attach button component with sprite quads for animation states
 	if entity.button then
 		entity.data = self.registries.ui[entity.button]
 		entity.img = love.graphics.newImage(entity.data.img)
@@ -76,13 +70,13 @@ function EntityFactory:create(key, config)
 		)
 	end
 
-	-- text
+	-- Attach text component for UI labels/text entities
 	if entity.text then
 		entity.font = self.registries.ui[entity.font] or self.registries.ui["fontL"]
 		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
 	end
 
-	-- action
+	-- Attach interactable component for clickable/actionable entities
 	if entity.action then
 		self.entityMaster:addComponent(entityID, "Interactable", {
 			action = entity.action,
