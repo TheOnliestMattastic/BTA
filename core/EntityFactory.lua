@@ -78,9 +78,7 @@ function EntityFactory:create(key, config)
 
 	-- Attach interactable component for clickable/actionable entities
 	if entity.action then
-		self.entityMaster:addComponent(entityID, "Interactable", {
-			action = entity.action,
-		})
+		self.entityMaster:addComponent(entityID, "Action", { action = entity.action })
 	end
 	return entityID
 end

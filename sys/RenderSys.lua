@@ -7,12 +7,12 @@
 -- NOTE: Virtual resolution ensures consistent scaling across different screen sizes
 -- =============================================================================
 
-local SystemsMaster = require("core.SystemsMaster")
-local RenderSys = setmetatable({}, { __index = SystemsMaster })
+local SM = require("core.SystemsMaster")
+local RenderSys = setmetatable({}, { __index = SM })
 RenderSys.__index = RenderSys
 
 function RenderSys.new(entityMaster)
-	local self = setmetatable(SystemsMaster.new(entityMaster), RenderSys)
+	local self = setmetatable(SM.new(entityMaster), RenderSys)
 	self.VIR = require("lib.virtual")
 	return self
 end

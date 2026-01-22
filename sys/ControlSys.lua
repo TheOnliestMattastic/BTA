@@ -6,18 +6,17 @@
 -- NOTE: action() matches key to handler; stub handlers print debug output (TODO: implement)
 -- =============================================================================
 
-local MC = require("core.SystemsMaster")
-local ControlSys = setmetatable({}, { __index = MC })
+local SM = require("core.SystemsMaster")
+local ControlSys = setmetatable({}, { __index = SM })
 ControlSys.__index = ControlSys
 local controls = require("config.controlConfig")
 
 function ControlSys.new(entityMaster)
-	local self = setmetatable(MC.new(entityMaster), ControlSys)
+	local self = setmetatable(SM.new(entityMaster), ControlSys)
 	self.keys = controls
 	return self
 end
 
--- stylua: ignore
 function ControlSys:action(key)
 	-- match key to action
 	local action
@@ -28,9 +27,10 @@ function ControlSys:action(key)
 		end
 	end
 
+  -- stylua: ignore
   -- action dispatch table
 	local handlers = {
-		ESC          = function() love.event.quit() end,
+		ESC          = function() self:ESC() end,
 		MOVE_LEFT    = function() self:moveLEFT() end,
 		MOVE_DOWN    = function() self:moveDOWN() end,
 		MOVE_UP      = function() self:moveUP() end,
@@ -48,6 +48,10 @@ function ControlSys:action(key)
 end
 
 -- TODO: configure with appropriate action
+function ControlSys:ESC()
+	love.event.quit()
+end
+
 function ControlSys:moveLEFT()
 	print("LEFT")
 end
