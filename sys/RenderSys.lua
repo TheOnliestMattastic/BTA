@@ -28,21 +28,6 @@ function RenderSys:drawState(canvas)
 		love.graphics.clear(bgColor.r, bgColor.g, bgColor.b, bgColor.a)
 	end
 
-	-- Render text entities (convert virtual coords to screen coords with alignment)
-	local textEntities = self.entityMaster:getEntitiesWith("Text")
-	for _, id in ipairs(textEntities) do
-		local coords = self.entityMaster:getComponent(id, "Coords")
-		local text = self.entityMaster:getComponent(id, "Text")
-
-		local font = love.graphics.newFont(text.font.img, text.font.size)
-		local textW = font:getWidth(text.text)
-		local textX = (coords.x * self.VIR.WIDTH) - (textW * text.xOffset)
-		local textY = coords.y * self.VIR.HEIGHT
-
-		love.graphics.setFont(font)
-		love.graphics.print(text.text, textX, textY)
-	end
-
 	-- Render button entities (scale sprite to virtual dimensions, apply offset)
 	local btnEntities = self.entityMaster:getEntitiesWith("Button")
 	for _, id in ipairs(btnEntities) do
@@ -57,6 +42,22 @@ function RenderSys:drawState(canvas)
 		local sy = btnH / btn.frameH
 
 		love.graphics.draw(btn.btn, btn.quads[0], btnX, btnY, 0, sx, sy)
+	end
+
+	-- Render text entities (convert virtual coords to screen coords with alignment)
+	local textEntities = self.entityMaster:getEntitiesWith("Text")
+	for _, id in ipairs(textEntities) do
+		local coords = self.entityMaster:getComponent(id, "Coords")
+		local text = self.entityMaster:getComponent(id, "Text")
+
+		local font = love.graphics.newFont(text.font.img, text.font.size)
+		local textW = font:getWidth(text.text)
+		local textH = font:getHeight()
+		local textX = (coords.x * self.VIR.WIDTH) - (textW * text.xOffset)
+		local textY = (coords.y * self.VIR.HEIGHT) - (textH / 2)
+
+		love.graphics.setFont(font)
+		love.graphics.print(text.text, textX, textY)
 	end
 
 	-- Reset canvas target and apply virtual resolution scaling to final output

@@ -57,41 +57,29 @@ function EntityFactory:create(key, config)
 		self.entityMaster:addComponent(entityID, "Coords", Coords.new(entity.x or 0, entity.y or 0))
 	end
 
-	-- text
-	if entity.text then
-		if not entity.font then
-			entity.font = "fontM"
-		end
-		entity.font = self.registries.ui[entity.font]
-		self.entityMaster:addComponent(
-		  entityID,
-		  "Text",
-		  Gui.newText(entity.text, entity.font, entity.xOffset or 0.5)
-		)
-	end
-
 	-- button
 	if entity.button then
 		entity.data = self.registries.ui[entity.button]
-		entity.quads = {}
 		entity.img = love.graphics.newImage(entity.data.img)
+
+		entity.quads = {}
 		local states = entity.img:getWidth() / entity.data.frameW
 		for state = 0, states - 1 do
 			entity.quads[state] =
 				love.graphics.newQuad(state * entity.data.frameW, 0, entity.data.frameW, entity.data.frameH, entity.img)
 		end
+
 		self.entityMaster:addComponent(
 			entityID,
 			"Button",
-			Gui.newButton(
-			  entity.data,
-			  entity.img,
-			  entity.quads,
-			  entity.w,
-			  entity.h,
-			  entity.xOffset
-			)
+			Gui.newButton(entity.data, entity.img, entity.quads, entity.w, entity.h, entity.xOffset or 0.5)
 		)
+	end
+
+	-- text
+	if entity.text then
+		entity.font = self.registries.ui[entity.font] or self.registries.ui["fontL"]
+		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
 	end
 
 	-- action
