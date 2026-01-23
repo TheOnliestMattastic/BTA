@@ -11,6 +11,7 @@ EntityFactory.__index = EntityFactory
 EntityFactory.registries = {}
 EntityFactory.configs = {}
 
+local Selection = require("components.Selection")
 local Gui = require("components.Gui")
 local Coords = require("components.Coords")
 
@@ -56,6 +57,7 @@ function EntityFactory:create(key, config)
 		entity.data = self.registries.ui[entity.button]
 		entity.img = love.graphics.newImage(entity.data.img)
 
+		-- configure quads
 		entity.quads = {}
 		local states = entity.img:getWidth() / entity.data.frameW
 		for state = 0, states - 1 do
@@ -63,11 +65,15 @@ function EntityFactory:create(key, config)
 				love.graphics.newQuad(state * entity.data.frameW, 0, entity.data.frameW, entity.data.frameH, entity.img)
 		end
 
+		-- button component
 		self.entityMaster:addComponent(
 			entityID,
 			"Button",
 			Gui.newButton(entity.data, entity.img, entity.quads, entity.w, entity.h, entity.xOffset or 0.5)
 		)
+
+		-- selection component
+		self.entityMaster:addComponent(entityID, "Selection", Selection.new())
 	end
 
 	-- Attach text component for UI labels/text entities
@@ -76,7 +82,7 @@ function EntityFactory:create(key, config)
 		self.entityMaster:addComponent(entityID, "Text", Gui.newText(entity.text, entity.font, entity.xOffset or 0.5))
 	end
 
-	-- Attach interactable component for clickable/actionable entities
+	-- Attach event component for clickable/actionable entities
 	if entity.action then
 		self.entityMaster:addComponent(entityID, "Action", { action = entity.action })
 	end

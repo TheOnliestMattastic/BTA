@@ -14,6 +14,7 @@ EventSys.__index = EventSys
 -- -----------------------------------------------------------------------------
 -- Initialize EventSys with empty event queue
 -- -----------------------------------------------------------------------------
+
 function EventSys.new(entityMaster)
 	local self = setmetatable(SM.new(entityMaster), EventSys)
 	self.eventQueue = {}
@@ -24,7 +25,8 @@ end
 -- -----------------------------------------------------------------------------
 -- Dispatch table mapping actions to handler methods; add new actions here
 -- -----------------------------------------------------------------------------
-local interactions = {
+
+local events = {
   -- commands
   ESC        = function(self, event) self:ESC(event) end,
   CONFIRM    = function(self, event) self:CONFIRM(event) end,
@@ -44,6 +46,7 @@ local interactions = {
 -- -----------------------------------------------------------------------------
 -- Queue an event for processing in the next update() call
 -- -----------------------------------------------------------------------------
+
 function EventSys:receiveEvent(event)
 	table.insert(self.eventQueue, event)
 end
@@ -51,9 +54,10 @@ end
 -- -----------------------------------------------------------------------------
 -- Process all queued events through dispatch table and clear queue
 -- -----------------------------------------------------------------------------
+
 function EventSys:update()
 	for _, event in ipairs(self.eventQueue) do
-		local handler = interactions[event.action]
+		local handler = events[event.action]
 		if handler then
 			handler(self, event)
 		end
@@ -64,9 +68,58 @@ end
 -- -----------------------------------------------------------------------------
 -- Quit game on ESC keyreleased
 -- -----------------------------------------------------------------------------
+
 function EventSys:ESC(event)
 	if event.input == "keyreleased" then
 		love.event.quit()
+	end
+end
+
+function EventSys:CONFIRM(event)
+	if event.input == "keyreleased" then
+		print("CONFIRM")
+	end
+end
+
+function EventSys:SELECT(event)
+	if event.input == "keypressed" then
+		print("SELECT")
+	end
+end
+
+function EventSys:MOVE_UP(event)
+	if event.input == "keypressed" then
+		print("MOVE_UP")
+	end
+end
+
+function EventSys:MOVE_DOWN(event)
+	if event.input == "keypressed" then
+		print("MOVE_DOWN")
+	end
+end
+
+function EventSys:MOVE_LEFT(event)
+	if event.input == "keypressed" then
+		print("MOVE_LEFT")
+	end
+end
+
+function EventSys:MOVE_RIGHT(event)
+	if event.input == "keypressed" then
+		print("MOVE_RIGHT")
+	end
+end
+
+function EventSys:ATTACK(event)
+	if event.input == "keypressed" then
+		print("ATTACK")
+	end
+end
+
+function EventSys:NAVIGATE(event)
+	if event.input == "keypressed" then
+		print("NAVIGATE")
 	end
 end
 
