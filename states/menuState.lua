@@ -18,6 +18,8 @@ local RS = {}
 -- menu.load()
 -- -----------------------------------------------------------------------------
 
+local menubtn
+
 function menuState.load()
 	-- load dependencies
 	local menuConfig = require("config.menuConfig")

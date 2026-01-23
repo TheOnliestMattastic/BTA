@@ -20,11 +20,11 @@ end
 
 function RenderSys:drawState(canvas)
 	-- Set render target to canvas (all drawing goes here until reset)
-  -- ---------------------------------------------------------------------------
+	-- ---------------------------------------------------------------------------
 	love.graphics.setCanvas(canvas)
 
 	-- Clear canvas by drawing background color
-  -- ---------------------------------------------------------------------------
+	-- ---------------------------------------------------------------------------
 	local bgEntities = self.entityMaster:getEntitiesWith("Background")
 	for _, id in ipairs(bgEntities) do
 		local bgColor = self.entityMaster:getComponent(id, "Background")
@@ -32,9 +32,10 @@ function RenderSys:drawState(canvas)
 	end
 
 	-- Render button entities (scale sprite to virtual dimensions, apply offset)
-  -- ---------------------------------------------------------------------------
+	-- ---------------------------------------------------------------------------
 	local btnEntities = self.entityMaster:getEntitiesWith("Button")
 	for _, id in ipairs(btnEntities) do
+		local sel = self.entityMaster:getComponent(id, "Selection")
 		local coords = self.entityMaster:getComponent(id, "Coords")
 		local btn = self.entityMaster:getComponent(id, "Button")
 
@@ -45,11 +46,21 @@ function RenderSys:drawState(canvas)
 		local sx = btnW / btn.frameW
 		local sy = btnH / btn.frameH
 
-		love.graphics.draw(btn.btn, btn.quads[0], btnX, btnY, 0, sx, sy)
+		-- render button by state
+		local state = 0
+		if sel.isSelected then
+			state = 1
+		elseif btn.isPressed then
+			state = 2
+		elseif btn.isDisabled then
+			state = 3
+		end
+    print(self.isSelected)
+		love.graphics.draw(btn.btn, btn.quads[state], btnX, btnY, 0, sx, sy)
 	end
 
 	-- Render text entities (convert virtual coords to screen coords with alignment)
-  -- ---------------------------------------------------------------------------
+	-- ---------------------------------------------------------------------------
 	local textEntities = self.entityMaster:getEntitiesWith("Text")
 	for _, id in ipairs(textEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
@@ -66,7 +77,7 @@ function RenderSys:drawState(canvas)
 	end
 
 	-- Reset canvas target and apply virtual resolution scaling to final output
-  -- ---------------------------------------------------------------------------
+	-- ---------------------------------------------------------------------------
 	love.graphics.setCanvas()
 	if self.VIR.scale and self.VIR.scale > 0 then
 		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)
