@@ -1,13 +1,14 @@
 -- =============================================================================
 -- conf.lua
+-- -----------------------------------------------------------------------------
 -- WHAT: Love2D configuration file for game window, audio, and module setup
 -- WHY: Configures engine-level behavior before game initialization
 -- HOW: love.conf() is called by Love2D before love.load(); sets t table values
 -- NOTE: Window size is 1024x768 with resizing enabled (min 1024x768)
--- =============================================================================
+-- -----------------------------------------------------------------------------
 
+-- stylua: ignore
 function love.conf(t)
-  -- stylua: ignore start
 	t.identity              = nil
 	t.appendidentity        = false
 	t.version               = "11.5"

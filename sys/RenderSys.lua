@@ -1,11 +1,12 @@
 -- =============================================================================
 -- sys/RenderSys.lua
+-- -----------------------------------------------------------------------------
 -- WHAT: Renders all drawable entities (backgrounds, text, buttons) to canvas
 -- WHY:  Centralizes rendering logic; separates drawing from game logic
 -- HOW:  System queries entityMaster for entities with drawable components,
 --       calculates screen positions using virtual resolution, draws to canvas
 -- NOTE: Virtual resolution ensures consistent scaling across different screen sizes
--- =============================================================================
+-- -----------------------------------------------------------------------------
 
 local SM = require("core.SystemsMaster")
 local RenderSys = setmetatable({}, { __index = SM })
@@ -19,9 +20,11 @@ end
 
 function RenderSys:drawState(canvas)
 	-- Set render target to canvas (all drawing goes here until reset)
+  -- ---------------------------------------------------------------------------
 	love.graphics.setCanvas(canvas)
 
 	-- Clear canvas by drawing background color
+  -- ---------------------------------------------------------------------------
 	local bgEntities = self.entityMaster:getEntitiesWith("Background")
 	for _, id in ipairs(bgEntities) do
 		local bgColor = self.entityMaster:getComponent(id, "Background")
@@ -29,6 +32,7 @@ function RenderSys:drawState(canvas)
 	end
 
 	-- Render button entities (scale sprite to virtual dimensions, apply offset)
+  -- ---------------------------------------------------------------------------
 	local btnEntities = self.entityMaster:getEntitiesWith("Button")
 	for _, id in ipairs(btnEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
@@ -45,6 +49,7 @@ function RenderSys:drawState(canvas)
 	end
 
 	-- Render text entities (convert virtual coords to screen coords with alignment)
+  -- ---------------------------------------------------------------------------
 	local textEntities = self.entityMaster:getEntitiesWith("Text")
 	for _, id in ipairs(textEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
@@ -61,6 +66,7 @@ function RenderSys:drawState(canvas)
 	end
 
 	-- Reset canvas target and apply virtual resolution scaling to final output
+  -- ---------------------------------------------------------------------------
 	love.graphics.setCanvas()
 	if self.VIR.scale and self.VIR.scale > 0 then
 		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)

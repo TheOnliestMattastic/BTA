@@ -1,10 +1,11 @@
 -- =============================================================================
 -- components/Gui.lua
+-- -----------------------------------------------------------------------------
 -- WHAT: Utility module for creating GUI component data structures
 -- WHY: Encapsulates component creation logic; prevents malformed component data
 -- HOW: Provides newText() and newButton() factories that validate and return component tables
 -- NOTE: Components are plain data tables; rendering/logic handled by systems
--- =============================================================================
+-- -----------------------------------------------------------------------------
 
 local Gui = {}
 
