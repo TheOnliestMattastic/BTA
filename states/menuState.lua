@@ -3,15 +3,16 @@
 -- -----------------------------------------------------------------------------
 -- WHAT: Main menu state with title and start button
 -- WHY: Entry point to game; allows player to initiate combat or configure settings
--- HOW: Loads entities from menuConfig via EntityFactory; renders with RenderSys and ControlSys
+-- HOW: Loads entities from menuConfig via EntityFactory; renders with RenderSys and InputSys
 -- NOTE: load() is called once; update/draw/keyreleased delegated from main.lua
 -- -----------------------------------------------------------------------------
 
 local menuState = {}
 local canvas = {}
-local RS = {}
-local CS = {}
 local EF = {}
+local ES = {}
+local IS = {}
+local RS = {}
 
 -- =============================================================================
 -- menu.load()
@@ -22,13 +23,15 @@ function menuState.load()
 	local menuConfig = require("config.menuConfig")
 	local EntityMaster = require("core.EntityMaster")
 	local RenderSys = require("sys.RenderSys")
-	local ControlSys = require("sys.ControlSys")
+	local EventSys = require("sys.EventSys")
+	local InputSys = require("sys.InputSys")
 	local EntityFactory = require("core.EntityFactory")
 
 	-- initialize systems
 	local EM = EntityMaster.new()
 	RS = RenderSys.new(EM)
-	CS = ControlSys.new(EM)
+	ES = EventSys.new(EM)
+	IS = InputSys.new(EM, ES)
 	EF = EntityFactory.new(EM)
 
 	-- create entities from config
@@ -46,6 +49,7 @@ end
 
 function menuState.update(dt)
 	RS:update()
+	ES:update()
 end
 
 -- =============================================================================
@@ -61,7 +65,15 @@ end
 -- -----------------------------------------------------------------------------
 
 function menuState.keyreleased(key)
-	CS:action(key)
+	IS:onKeyreleased(key)
+end
+
+-- =============================================================================
+-- menu.keypressed()
+-- -----------------------------------------------------------------------------
+
+function menuState.keypressed(key)
+	IS:onKeypressed(key)
 end
 
 return menuState
