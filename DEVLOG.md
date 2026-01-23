@@ -110,4 +110,62 @@
 
 ---
 
-**Status**: Architecture solidified and documented. Ready to build gameplay systems (game state, creature management, grid movement).
+## [2025-01-23] [ongoing]
+
+### What I Did
+
+- **Input System Refactor**: Split monolithic ControlSys into two focused systems
+  - Created **InputSys**: Maps keyboard input to game actions via controlConfig
+  - Created **EventSys**: Manages event queue and dispatches to action handlers via dispatch table
+  - Improves separation of concerns and allows easy addition of new actions without modifying input handling
+
+- **Component Naming Clarity**: 
+  - Renamed Transform → Position → **Coords** for screen positioning (clearer intent)
+  - Created dedicated Coords.lua component file
+  - Updated RenderSys, EntityFactory, and menuState to use Coords consistently
+
+- **Entity Factory Pattern Implementation**:
+  - Refactored EntityFactory.create() to accept config inline instead of requiring setConfig()
+  - Added quad generation for button spritesheets (support for multi-frame button states)
+  - Consolidated text and button component setup in factory
+  - Improved factory flexibility for different entity types
+
+- **Menu State Integration**:
+  - Restructured menuState.load() for cleaner dependency initialization
+  - Added proper callbacks: update(), resize(), keypressed(), keyreleased()
+  - Implemented canvas support for menu rendering
+  - Connected EventSys:update() to game loop
+
+- **Documentation & Code Quality**:
+  - Added WHAT/WHY/HOW/NOTE headers to InputSys, EventSys, RenderSys, conf.lua
+  - Added inline function comments explaining purpose of each code block
+  - Standardized file header formatting across all systems
+  - Cleaned up formatting and removed debug print statements
+
+- **Asset Management**:
+  - Removed underscores from UI sprite filenames for consistency (button_idle.png → buttonIdle.png, etc.)
+
+### Currently Working On
+
+- **Button Rendering**: Skeleton code for button quad rendering in RenderSys (in progress)
+- **Menu Navigation**: Full event flow from input → action → handler
+
+### Next Steps
+
+- [ ] Complete button rendering with spritesheet quads
+- [ ] Implement CONFIRM, SELECT, MOVE_UP/DOWN handlers in EventSys
+- [ ] Add menu navigation state (highlight selected button, mouse support)
+- [ ] Build gameState initialization and game loop
+- [ ] Implement creature spawning and grid system
+- [ ] Create turn-based combat loop with action points
+- [ ] Build ability system and roster management
+
+### Key Insights
+
+- **Event-Driven Architecture**: Separating input mapping from event handling makes the codebase more flexible and testable
+- **Component Naming Matters**: "Coords" is more intuitive than "Position" for screen positioning (vs. game world positions)
+- **Inline Comments**: Adding code block comments significantly improves readability without being verbose
+
+---
+
+**Status**: Input/event system refactored and documented. Menu state structure complete with proper systems integration. Ready to implement button interactions and game state.
