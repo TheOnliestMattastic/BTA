@@ -64,8 +64,16 @@ function RenderSys:drawState(canvas)
 	for _, id in ipairs(textEntities) do
 		local coords = self.entityMaster:getComponent(id, "Coords")
 		local text = self.entityMaster:getComponent(id, "Text")
+		local btn = self.entityMaster:getComponent(id, "Button")
 
-		local font = love.graphics.newFont(text.font.img, text.font.size)
+		local font
+		if btn and btn.isPressed then
+			-- pressed offset
+			font = love.graphics.newFont(text.font.img, text.font.size * 0.85)
+		else
+			font = love.graphics.newFont(text.font.img, text.font.size)
+		end
+
 		local textW = font:getWidth(text.text)
 		local textH = font:getHeight()
 		local textX = (coords.x * self.VIR.WIDTH) - (textW * text.xOffset)
