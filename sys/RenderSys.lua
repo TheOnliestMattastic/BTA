@@ -48,12 +48,12 @@ function RenderSys:drawState(canvas)
 
 		-- render button by state
 		local state = 0
-		if sel.isSelected then
-			state = 1
-		elseif btn.isPressed then
+		if btn.isDisabled then
 			state = 2
-		elseif btn.isDisabled then
+		elseif btn.isPressed then
 			state = 3
+		elseif sel.isSelected then
+			state = 1
 		end
 		love.graphics.draw(btn.btn, btn.quads[state], btnX, btnY, 0, sx, sy)
 	end

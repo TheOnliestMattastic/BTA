@@ -76,8 +76,16 @@ function EventSys:ESC(event)
 end
 
 function EventSys:CONFIRM(event)
-	if event.input == "keyreleased" then
-		print("CONFIRM")
+	if event.input == "keypressed" then
+		local selEntity = self.entityMaster:getEntitiesWith("Selection")
+		for _, id in ipairs(selEntity) do
+			local sel = self.entityMaster:getComponent(id, "Selection")
+			local btn = self.entityMaster:getComponent(id, "Button")
+			if sel.isSelected then
+				btn.isPressed = true
+        print(btn.isPressed)
+			end
+		end
 	end
 end
 
