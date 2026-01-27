@@ -55,7 +55,6 @@ function RenderSys:drawState(canvas)
 		elseif btn.isDisabled then
 			state = 3
 		end
-    print(self.isSelected)
 		love.graphics.draw(btn.btn, btn.quads[state], btnX, btnY, 0, sx, sy)
 	end
 
