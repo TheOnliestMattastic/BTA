@@ -69,7 +69,15 @@ function EntityFactory:create(key, config)
 		self.entityMaster:addComponent(
 			entityID,
 			"Button",
-			Gui.newButton(entity.data, entity.img, entity.quads, entity.w, entity.h, entity.xOffset or 0.5)
+			Gui.newButton(
+				entity.data,
+				entity.img,
+				entity.quads,
+				entity.w,
+				entity.h,
+				entity.xOffset or 0.5,
+				entity.action
+			)
 		)
 
 		-- selection component

@@ -14,10 +14,10 @@ local loadedStates = {}
 
 function SwitchState(stateName)
 	local state
-	if stateName == "menu" then
+	if stateName == "menuState" then
 		local menuState = require("states.menuState")
 		state = menuState
-	elseif stateName == "game" then
+	elseif stateName == "gameState" then
 		local gameState = require("states.gameState")
 		state = gameState
 	else
@@ -50,7 +50,7 @@ function love.load()
 	EntityFactory:setRegistries(uiReg, creatureReg, tilesetsReg)
 
 	-- switch state
-	SwitchState("menu")
+	SwitchState("menuState")
 end
 
 -- =============================================================================

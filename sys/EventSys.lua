@@ -100,6 +100,10 @@ function EventSys:CONFIRM(event)
 			local btn = self.entityMaster:getComponent(id, "Button")
 			if sel.isSelected and btn.isPressed then
 				btn.isPressed = false
+
+				if btn.action == "startGame" then
+					SwitchState("gameState")
+				end
 			end
 		end
 	end

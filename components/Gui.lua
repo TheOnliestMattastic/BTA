@@ -30,7 +30,7 @@ function Gui.newText(text, font, xOffset)
 end
 
 -- buttons
-function Gui.newButton(data, img, quads, width, height, xOffset)
+function Gui.newButton(data, img, quads, width, height, xOffset, action)
 	return {
 		btn = img,
 		quads = quads,
@@ -41,6 +41,7 @@ function Gui.newButton(data, img, quads, width, height, xOffset)
 		xOffset = xOffset,
 		isPressed = false,
 		isDisabled = false,
+		action = action or nil,
 	}
 end
 
