@@ -9,8 +9,8 @@
 
 local menuState = {}
 local canvas = {}
-local EF = {}
 local ES = {}
+local EF = {}
 local IS = {}
 local RS = {}
 
@@ -21,18 +21,14 @@ local RS = {}
 function menuState.load()
 	-- load dependencies
 	local menuConfig = require("config.menuConfig")
-	local EntityMaster = require("core.EntityMaster")
-	local RenderSys = require("sys.RenderSys")
-	local EventSys = require("sys.EventSys")
-	local InputSys = require("sys.InputSys")
-	local EntityFactory = require("core.EntityFactory")
+	local DM = require("lib.dependenciesMaster")
 
 	-- initialize systems
-	local EM = EntityMaster.new()
-	RS = RenderSys.new(EM)
-	ES = EventSys.new(EM)
-	IS = InputSys.new(EM, ES)
-	EF = EntityFactory.new(EM)
+	local EM = DM.EntityMaster.new()
+	ES = DM.EventSys.new(EM)
+	EF = DM.EntityFactory.new(EM)
+	IS = DM.InputSys.new(EM, ES)
+	RS = DM.RenderSys.new(EM)
 
 	-- create entities from config
 	EF:create("bgColor", menuConfig)
