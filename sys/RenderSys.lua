@@ -87,7 +87,14 @@ function RenderSys:drawState(canvas)
 	-- ---------------------------------------------------------------------------
 	love.graphics.setCanvas()
 	if self.VIR.scale and self.VIR.scale > 0 then
-		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)
+		love.graphics.draw(
+		  canvas,
+		  self.VIR.translateX,
+		  self.VIR.translateY,
+		  0,
+		  self.VIR.scale,
+		  self.VIR.scale
+		)
 	end
 end
 

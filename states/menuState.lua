@@ -8,7 +8,7 @@
 -- -----------------------------------------------------------------------------
 
 local menuState = {}
-local canvas = {}
+local menuCanvas = {}
 local ES = {}
 local EF = {}
 local IS = {}
@@ -21,14 +21,14 @@ local RS = {}
 function menuState.load()
 	-- load dependencies
 	local menuConfig = require("config.menuConfig")
-	local DM = require("lib.dependenciesMaster")
+	local GM = require("core.GameMaster")
 
 	-- initialize systems
-	local EM = DM.EntityMaster.new()
-	ES = DM.EventSys.new(EM)
-	EF = DM.EntityFactory.new(EM)
-	IS = DM.InputSys.new(EM, ES)
-	RS = DM.RenderSys.new(EM)
+	local EM = GM.EntityMaster.new()
+	ES = GM.EventSys.new(EM)
+	EF = GM.EntityFactory.new(EM)
+	IS = GM.InputSys.new(EM, ES)
+	RS = GM.RenderSys.new(EM)
 
 	-- create entities from config
 	EF:create("bgColor", menuConfig)
@@ -36,7 +36,7 @@ function menuState.load()
 	EF:create("startButton", menuConfig)
 
 	-- create canavas
-	canvas = love.graphics.newCanvas()
+	menuCanvas = love.graphics.newCanvas()
 end
 
 -- =============================================================================
@@ -53,7 +53,7 @@ end
 -- -----------------------------------------------------------------------------
 
 function menuState.draw()
-	RS:drawState(canvas)
+	RS:drawState(menuCanvas)
 end
 
 -- =============================================================================

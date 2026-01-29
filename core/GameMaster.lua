@@ -18,7 +18,8 @@ GameMaster.virtual = require("lib.virtual")
 GameMaster.anim8 = require("lib.anim8")
 
 -- sys
-GameMaster.controlSys = require("sys.controlSys")
-GameMaster.renderSys = require("sys.renderSys")
+GameMaster.EventSys = require("sys.EventSys")
+GameMaster.InputSys = require("sys.InputSys")
+GameMaster.RenderSys = require("sys.RenderSys")
 
 return GameMaster

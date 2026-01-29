@@ -3,7 +3,7 @@
 -- -----------------------------------------------------------------------------
 
 local gameState = {}
-local canvas = {}
+local gameCanvas = {}
 local ES = {}
 local EF = {}
 local IS = {}
@@ -15,20 +15,20 @@ local RS = {}
 
 function gameState.load()
 	local gameConfig = require("config.gameConfig")
-	local DM = require("lib.dependenciesMaster")
+	local GM = require("core.GameMaster")
 
 	-- initialize systems
-	local EM = DM.EntityMaster.new()
-	ES = DM.EventSys.new(EM)
-	EF = DM.EntityFactory.new(EM)
-	IS = DM.InputSys.new(EM, ES)
-	RS = DM.RenderSys.new(EM)
+	local EM = GM.EntityMaster.new()
+	ES = GM.EventSys.new(EM)
+	EF = GM.EntityFactory.new(EM)
+	IS = GM.InputSys.new(EM, ES)
+	RS = GM.RenderSys.new(EM)
 
 	-- create entities from config
 	EF:create("bgColor", gameConfig)
 	EF:create("title", gameConfig)
 
-	canvas = love.graphics.newCanvas()
+	gameCanvas = love.graphics.newCanvas()
 end
 
 -- =============================================================================
@@ -45,7 +45,7 @@ end
 -- -----------------------------------------------------------------------------
 
 function gameState.draw()
-	RS:drawState(canvas)
+	RS:drawState(gameCanvas)
 end
 
 -- =============================================================================
