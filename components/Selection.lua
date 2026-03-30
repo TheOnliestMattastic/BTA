@@ -7,11 +7,9 @@
 
 local Selection = {}
 
-function Selection.new(isSelected, isFocused)
+function Selection.new()
 	return {
-		isSelected = isSelected or false, -- Whether the entity is currently selected
-		isFocused = isFocused or false, -- Whether the entity is currently focused (hovered/active)
-		selectionIndex = 1, -- Order or index within a selection group
+		selected = true,
 	}
 end
 

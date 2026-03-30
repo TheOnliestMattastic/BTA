@@ -81,10 +81,9 @@ function EntityFactory:create(key, config)
 		)
 
 		-- selection component
-		if not entity.isSelected then
-			entity.isSelected = false
+		if entity.selected then
+			self.entityMaster:addComponent(entityID, "Selection", Selection.new())
 		end
-		self.entityMaster:addComponent(entityID, "Selection", Selection.new(entity.isSelected))
 	end
 
 	-- Attach text component for UI labels/text entities

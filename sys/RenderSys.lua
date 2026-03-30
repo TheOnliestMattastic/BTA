@@ -52,7 +52,7 @@ function RenderSys:drawState(canvas)
 			state = 2
 		elseif btn.isPressed then
 			state = 3
-		elseif sel.isSelected then
+		elseif sel.selected then
 			state = 1
 		end
 		love.graphics.draw(btn.btn, btn.quads[state], btnX, btnY, 0, sx, sy)
@@ -87,14 +87,7 @@ function RenderSys:drawState(canvas)
 	-- ---------------------------------------------------------------------------
 	love.graphics.setCanvas()
 	if self.VIR.scale and self.VIR.scale > 0 then
-		love.graphics.draw(
-		  canvas,
-		  self.VIR.translateX,
-		  self.VIR.translateY,
-		  0,
-		  self.VIR.scale,
-		  self.VIR.scale
-		)
+		love.graphics.draw(canvas, self.VIR.translateX, self.VIR.translateY, 0, self.VIR.scale, self.VIR.scale)
 	end
 end
 

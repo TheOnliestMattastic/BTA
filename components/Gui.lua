@@ -39,8 +39,6 @@ function Gui.newButton(data, img, quads, width, height, xOffset, action)
 		frameW = data.frameW,
 		frameH = data.frameH,
 		xOffset = xOffset,
-		isPressed = false,
-		isDisabled = false,
 		action = action or nil,
 	}
 end

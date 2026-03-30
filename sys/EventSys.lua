@@ -84,7 +84,7 @@ function EventSys:CONFIRM(event)
 		for _, id in ipairs(selEntity) do
 			local sel = self.entityMaster:getComponent(id, "Selection")
 			local btn = self.entityMaster:getComponent(id, "Button")
-			if sel.isSelected then
+			if sel.selected then
 				btn.isPressed = true
 			end
 		end
@@ -98,7 +98,7 @@ function EventSys:CONFIRM(event)
 		for _, id in ipairs(selEntity) do
 			local sel = self.entityMaster:getComponent(id, "Selection")
 			local btn = self.entityMaster:getComponent(id, "Button")
-			if sel.isSelected and btn.isPressed then
+			if sel.selected and btn.isPressed then
 				btn.isPressed = false
 
 				if btn.action == "startGame" then

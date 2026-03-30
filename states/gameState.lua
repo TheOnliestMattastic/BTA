@@ -8,6 +8,8 @@ local ES = {}
 local EF = {}
 local IS = {}
 local RS = {}
+local TileMap = require("core.TileMap")
+local map
 
 -- =============================================================================
 -- gameState.load()
@@ -29,6 +31,9 @@ function gameState.load()
 	EF:create("title", gameConfig)
 
 	gameCanvas = love.graphics.newCanvas()
+
+  map = TileMap
+
 end
 
 -- =============================================================================

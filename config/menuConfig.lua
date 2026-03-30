@@ -32,6 +32,6 @@ return {
 		xOffset = 0.5,
 		text = "Play",
 		action = "startGame",
-		isSelected = true,
+		selected = true,
 	},
 }
